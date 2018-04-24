@@ -1,1 +1,1 @@
-# quick-knowledge-ramda
+# Quick knowledge Ramda
