@@ -42,17 +42,15 @@ Creates a new list iteration function from an existing one by adding two new par
 
 This would turn, for instance, R.map function into one that more closely resembles Array.prototype.map. Note that this will only work for functions in which the iteration callback function is the first parameter, and where the list is the last parameter. (This latter might be unimportant if the list parameter is not used.)
 
+```js
 var mapIndexed = R.addIndex(R.map);
 mapIndexed((val, idx) => idx + '-' + val, ['f', 'o', 'o', 'b', 'a', 'r']);
 //=> ['0-f', '1-o', '2-o', '3-b', '4-a', '5-r']
+```
 
-
-
-### adjust Added in v0.14.0
-
-(a → a) → Number → [a] → [a]
+### adjust
+`(a → a) → Number → [a] → [a]`
 Parameters
-
 fn
 The function to apply.
  idx
@@ -65,16 +63,14 @@ Array A copy of the supplied array-like object with the element at index `idx` r
 Applies a function to the value at the given index of an array, returning a new copy of the array with the element at the given index replaced with the result of the function application.
 
 See also update.
-
+```
 R.adjust(R.add(10), 1, [1, 2, 3]);     //=> [1, 12, 3]
 R.adjust(R.add(10))(1)([1, 2, 3]);     //=> [1, 12, 3]
+```
 
-
-### all Added in v0.1.0
-
-(a → Boolean) → [a] → Boolean
+### all
+`(a → Boolean) → [a] → Boolean`
 Parameters
-
 fn
 The predicate function.
  list
@@ -89,17 +85,15 @@ Dispatches to the all method of the second argument, if present.
 Acts as a transducer if a transformer is given in list position.
 
 See also any, none, transduce.
-
+```
 var equals3 = R.equals(3);
 R.all(equals3)([3, 3, 3, 3]); //=> true
 R.all(equals3)([3, 3, 1, 3]); //=> false
+```
 
-
-### allPass Added in v0.9.0
-
-[(*… → Boolean)] → (*… → Boolean)
+### allPass
+`[(*… → Boolean)] → (*… → Boolean)`
 Parameters
-
 predicates
 An array of predicates to check
 Returns
@@ -110,19 +104,18 @@ Takes a list of predicates and returns a predicate that returns true for a given
 The function returned is a curried function whose arity matches that of the highest-arity predicate.
 
 See also anyPass.
-
+```
 var isQueen = R.propEq('rank', 'Q');
 var isSpade = R.propEq('suit', '♠︎');
 var isQueenOfSpades = R.allPass([isQueen, isSpade]);
 
 isQueenOfSpades({rank: 'Q', suit: '♣︎'}); //=> false
 isQueenOfSpades({rank: 'Q', suit: '♠︎'}); //=> true
+```
 
-### always Added in v0.1.0
-
-a → (* → a)
+### always
+`a → (* → a)`
 Parameters
-
 val
 The value to wrap in a function
 Returns
@@ -132,41 +125,36 @@ Returns a function that always returns the given value. Note that for non-primit
 
 This function is known as const, constant, or K (for K combinator) in other languages and libraries.
 
+```
 var t = R.always('Tee');
 t(); //=> 'Tee'
+```
 
-
-### and Added in v0.1.0
-
-a → b → a | b
+### and
+`a → b → a | b`
 Parameters
-
 a
 b
 Returns
-
 Any the first argument if it is falsy, otherwise the second argument.
 Returns true if both arguments are true; false otherwise.
 
 See also both.
-
+```
 R.and(true, true); //=> true
 R.and(true, false); //=> false
 R.and(false, true); //=> false
 R.and(false, false); //=> false
+```
 
-
-### any Added in v0.1.0
-
-(a → Boolean) → [a] → Boolean
+### any
+`(a → Boolean) → [a] → Boolean`
 Parameters
-
 fn
 The predicate function.
  list
 The array to consider.
 Returns
-
 Boolean `true` if the predicate is satisfied by at least one element, `false` otherwise.
 Returns true if at least one of elements of the list match the predicate, false otherwise.
 
@@ -175,18 +163,16 @@ Dispatches to the any method of the second argument, if present.
 Acts as a transducer if a transformer is given in list position.
 
 See also all, none, transduce.
-
+```
 var lessThan0 = R.flip(R.lt)(0);
 var lessThan2 = R.flip(R.lt)(2);
 R.any(lessThan0)([1, 2]); //=> false
 R.any(lessThan2)([1, 2]); //=> true
+```
 
-
-### anyPass Added in v0.9.0
-
-[(*… → Boolean)] → (*… → Boolean)
+### anyPass
+`[(*… → Boolean)] → (*… → Boolean)`
 Parameters
-
 predicates
 An array of predicates to check
 Returns
@@ -197,7 +183,7 @@ Takes a list of predicates and returns a predicate that returns true for a given
 The function returned is a curried function whose arity matches that of the highest-arity predicate.
 
 See also allPass.
-
+```
 var isClub = R.propEq('suit', '♣');
 var isSpade = R.propEq('suit', '♠');
 var isBlackCard = R.anyPass([isClub, isSpade]);
@@ -205,15 +191,13 @@ var isBlackCard = R.anyPass([isClub, isSpade]);
 isBlackCard({rank: '10', suit: '♣'}); //=> true
 isBlackCard({rank: 'Q', suit: '♠'}); //=> true
 isBlackCard({rank: 'Q', suit: '♦'}); //=> false
+```
 
-
-### ap Added in v0.3.0
-
-[a → b] → [a] → [b]
-Apply f => f (a → b) → f a → f b
-(a → b → c) → (a → b) → (a → c)
+### ap
+`[a → b] → [a] → [b]`
+Apply `f => f (a → b) → f a → f b
+(a → b → c) → (a → b) → (a → c)`
 Parameters
-
 applyF
 applyX
 Returns
@@ -222,20 +206,18 @@ Returns
 ap applies a list of functions to a list of values.
 
 Dispatches to the ap method of the second argument, if present. Also treats curried functions as applicatives.
-
+```
 R.ap([R.multiply(2), R.add(3)], [1,2,3]); //=> [2, 4, 6, 4, 5, 6]
 R.ap([R.concat('tasty '), R.toUpper], ['pizza', 'salad']); //=> ["tasty pizza", "tasty salad", "PIZZA", "SALAD"]
 
 // R.ap can also be used as S combinator
 // when only two functions are passed
 R.ap(R.concat, R.toUpper)('Ramda') //=> 'RamdaRAMDA'
+```
 
-
-### aperture Added in v0.12.0
-
-Number → [a] → [[a]]
+### aperture
+`Number → [a] → [[a]]`
 Parameters
-
 n
 The size of the tuples to create
  list
@@ -248,11 +230,13 @@ Returns a new list, composed of n-tuples of consecutive elements. If n is greate
 Acts as a transducer if a transformer is given in list position.
 
 See also transduce.
-
+```
 R.aperture(2, [1, 2, 3, 4, 5]); //=> [[1, 2], [2, 3], [3, 4], [4, 5]]
 R.aperture(3, [1, 2, 3, 4, 5]); //=> [[1, 2, 3], [2, 3, 4], [3, 4, 5]]
 R.aperture(7, [1, 2, 3, 4, 5]); //=> []
-append Added in v0.1.0
+```
+
+### append
 
 a → [a] → [a]
 Parameters
@@ -273,9 +257,8 @@ R.append('tests', []); //=> ['tests']
 R.append(['tests'], ['write', 'more']); //=> ['write', 'more', ['tests']]
 
 
-### apply Added in v0.7.0
-
-(*… → a) → [*] → a
+### apply 
+`(*… → a) → [*] → a`
 Parameters
 
 fn
