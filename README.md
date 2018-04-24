@@ -4,9 +4,6 @@
 Biblioteca de Javascript funcional.
 
 ### __ 
-
-A special placeholder value used to specify "gaps" within curried functions, allowing partial application of any combination of arguments, regardless of their positions.
-
 If `g` is a curried ternary function and `_` is `R.__`, the following are equivalent:
 ```js
 g(1, 2, 3)
@@ -18,11 +15,11 @@ g(_, 2)(1)(3)
 g(_, 2)(1, 3)
 g(_, 2)(_, 3)(1)
 ```
-
 ```js
 var greet = R.replace('{name}', R.__, 'Hello, {name}!');
 greet('Alice'); //=> 'Hello, Alice!'
 ```
+
 ### add
 `Number → Number → Number`
 ```js
@@ -32,16 +29,6 @@ R.add(7)(10);      //=> 17
 
 ### addIndex
 `((a … → b) … → [a] → *) → (a …, Int, [a] → b) … → [a] → *)`
-
-fn
-A list iteration function that does not pass index or list to its callback
-Returns
-
-function An altered list iteration function that passes (item, index, list) to its callback
-Creates a new list iteration function from an existing one by adding two new parameters to its callback function: the current index, and the entire list.
-
-This would turn, for instance, R.map function into one that more closely resembles Array.prototype.map. Note that this will only work for functions in which the iteration callback function is the first parameter, and where the list is the last parameter. (This latter might be unimportant if the list parameter is not used.)
-
 ```js
 var mapIndexed = R.addIndex(R.map);
 mapIndexed((val, idx) => idx + '-' + val, ['f', 'o', 'o', 'b', 'a', 'r']);
@@ -50,19 +37,6 @@ mapIndexed((val, idx) => idx + '-' + val, ['f', 'o', 'o', 'b', 'a', 'r']);
 
 ### adjust
 `(a → a) → Number → [a] → [a]`
-Parameters
-fn
-The function to apply.
- idx
-The index.
- list
-An array-like object whose value at the supplied index will be replaced.
-Returns
-
-Array A copy of the supplied array-like object with the element at index `idx` replaced with the value returned by applying `fn` to the existing element.
-Applies a function to the value at the given index of an array, returning a new copy of the array with the element at the given index replaced with the result of the function application.
-
-See also update.
 ```
 R.adjust(R.add(10), 1, [1, 2, 3]);     //=> [1, 12, 3]
 R.adjust(R.add(10))(1)([1, 2, 3]);     //=> [1, 12, 3]
@@ -70,21 +44,6 @@ R.adjust(R.add(10))(1)([1, 2, 3]);     //=> [1, 12, 3]
 
 ### all
 `(a → Boolean) → [a] → Boolean`
-Parameters
-fn
-The predicate function.
- list
-The array to consider.
-Returns
-
-Boolean `true` if the predicate is satisfied by every element, `false` otherwise.
-Returns true if all elements of the list match the predicate, false if there are any that don't.
-
-Dispatches to the all method of the second argument, if present.
-
-Acts as a transducer if a transformer is given in list position.
-
-See also any, none, transduce.
 ```
 var equals3 = R.equals(3);
 R.all(equals3)([3, 3, 3, 3]); //=> true
@@ -93,17 +52,6 @@ R.all(equals3)([3, 3, 1, 3]); //=> false
 
 ### allPass
 `[(*… → Boolean)] → (*… → Boolean)`
-Parameters
-predicates
-An array of predicates to check
-Returns
-
-function The combined predicate
-Takes a list of predicates and returns a predicate that returns true for a given list of arguments if every one of the provided predicates is satisfied by those arguments.
-
-The function returned is a curried function whose arity matches that of the highest-arity predicate.
-
-See also anyPass.
 ```
 var isQueen = R.propEq('rank', 'Q');
 var isSpade = R.propEq('suit', '♠︎');
@@ -115,16 +63,6 @@ isQueenOfSpades({rank: 'Q', suit: '♠︎'}); //=> true
 
 ### always
 `a → (* → a)`
-Parameters
-val
-The value to wrap in a function
-Returns
-
-function A Function :: * -> val.
-Returns a function that always returns the given value. Note that for non-primitives the value returned is a reference to the original value.
-
-This function is known as const, constant, or K (for K combinator) in other languages and libraries.
-
 ```
 var t = R.always('Tee');
 t(); //=> 'Tee'
@@ -132,14 +70,6 @@ t(); //=> 'Tee'
 
 ### and
 `a → b → a | b`
-Parameters
-a
-b
-Returns
-Any the first argument if it is falsy, otherwise the second argument.
-Returns true if both arguments are true; false otherwise.
-
-See also both.
 ```
 R.and(true, true); //=> true
 R.and(true, false); //=> false
@@ -149,20 +79,6 @@ R.and(false, false); //=> false
 
 ### any
 `(a → Boolean) → [a] → Boolean`
-Parameters
-fn
-The predicate function.
- list
-The array to consider.
-Returns
-Boolean `true` if the predicate is satisfied by at least one element, `false` otherwise.
-Returns true if at least one of elements of the list match the predicate, false otherwise.
-
-Dispatches to the any method of the second argument, if present.
-
-Acts as a transducer if a transformer is given in list position.
-
-See also all, none, transduce.
 ```
 var lessThan0 = R.flip(R.lt)(0);
 var lessThan2 = R.flip(R.lt)(2);
@@ -172,17 +88,6 @@ R.any(lessThan2)([1, 2]); //=> true
 
 ### anyPass
 `[(*… → Boolean)] → (*… → Boolean)`
-Parameters
-predicates
-An array of predicates to check
-Returns
-
-function The combined predicate
-Takes a list of predicates and returns a predicate that returns true for a given list of arguments if at least one of the provided predicates is satisfied by those arguments.
-
-The function returned is a curried function whose arity matches that of the highest-arity predicate.
-
-See also allPass.
 ```
 var isClub = R.propEq('suit', '♣');
 var isSpade = R.propEq('suit', '♠');
@@ -197,15 +102,6 @@ isBlackCard({rank: 'Q', suit: '♦'}); //=> false
 `[a → b] → [a] → [b]`
 Apply `f => f (a → b) → f a → f b
 (a → b → c) → (a → b) → (a → c)`
-Parameters
-applyF
-applyX
-Returns
-
-*
-ap applies a list of functions to a list of values.
-
-Dispatches to the ap method of the second argument, if present. Also treats curried functions as applicatives.
 ```
 R.ap([R.multiply(2), R.add(3)], [1,2,3]); //=> [2, 4, 6, 4, 5, 6]
 R.ap([R.concat('tasty '), R.toUpper], ['pizza', 'salad']); //=> ["tasty pizza", "tasty salad", "PIZZA", "SALAD"]
@@ -217,19 +113,6 @@ R.ap(R.concat, R.toUpper)('Ramda') //=> 'RamdaRAMDA'
 
 ### aperture
 `Number → [a] → [[a]]`
-Parameters
-n
-The size of the tuples to create
- list
-The list to split into n-length tuples
-Returns
-
-Array The resulting list of `n`-length tuples
-Returns a new list, composed of n-tuples of consecutive elements. If n is greater than the length of the list, an empty list is returned.
-
-Acts as a transducer if a transformer is given in list position.
-
-See also transduce.
 ```
 R.aperture(2, [1, 2, 3, 4, 5]); //=> [[1, 2], [2, 3], [3, 4], [4, 5]]
 R.aperture(3, [1, 2, 3, 4, 5]); //=> [[1, 2, 3], [2, 3, 4], [3, 4, 5]]
@@ -237,168 +120,71 @@ R.aperture(7, [1, 2, 3, 4, 5]); //=> []
 ```
 
 ### append
-
-a → [a] → [a]
-Parameters
-
-el
-The element to add to the end of the new list.
- list
-The list of elements to add a new item to. list.
-Returns
-
-Array A new list containing the elements of the old list followed by `el`.
-Returns a new list containing the contents of the given list, followed by the given element.
-
-See also prepend.
-
+`a → [a] → [a]`
+```
 R.append('tests', ['write', 'more']); //=> ['write', 'more', 'tests']
 R.append('tests', []); //=> ['tests']
 R.append(['tests'], ['write', 'more']); //=> ['write', 'more', ['tests']]
-
+```
 
 ### apply 
 `(*… → a) → [*] → a`
-Parameters
-
-fn
-The function which will be called with args
- args
-The arguments to call fn with
-Returns
-
-* result The result, equivalent to `fn(...args)`
-Applies function fn to the argument list args. This is useful for creating a fixed-arity function from a variadic function. fn should be a bound function if context is significant.
-
-See also call, unapply.
-
+```
 var nums = [1, 2, 3, -99, 42, 6, 7];
 R.apply(Math.max, nums); //=> 42
-applySpec Added in v0.20.0
+```
 
-{k: ((a, b, …, m) → v)} → ((a, b, …, m) → {k: v})
-Parameters
-
-spec
-an object recursively mapping properties to functions for producing the values for these properties.
-Returns
-
-function A function that returns an object of the same structure as `spec', with each property set to the value returned by calling its associated function with the supplied arguments.
-Given a spec object recursively mapping properties to functions, creates a function producing an object of the same structure, by mapping each property to the result of calling its associated function with the supplied arguments.
-
-See also converge, juxt.
-
+### applySpec
+`{k: ((a, b, …, m) → v)} → ((a, b, …, m) → {k: v})`
+```
 var getMetrics = R.applySpec({
   sum: R.add,
   nested: { mul: R.multiply }
 });
 getMetrics(2, 4); // => { sum: 6, nested: { mul: 8 } }
+```
 
-
-### applyTo Added in v0.25.0
-
-a → (a → b) → b
-Parameters
-
-x
-The value
- f
-The function to apply
-Returns
-
-* The result of applying `f` to `x`
-Takes a value and applies a function to it.
-
-This function is also known as the thrush combinator.
-
+### applyTo
+`a → (a → b) → b`
+```
 var t42 = R.applyTo(42);
-t42(R.identity); //=> 42
-t42(R.add(1)); //=> 43
+t42(R.identity); 
+//=> 42
+t42(R.add(1)); 
+//=> 43
+```
 
-
-### ascend Added in v0.23.0
-
-Ord b => (a → b) → a → a → Number
-Parameters
-
-fn
-A function of arity one that returns a value that can be compared
- a
-The first item to be compared.
- b
-The second item to be compared.
-Returns
-
-Number `-1` if fn(a) < fn(b), `1` if fn(b) < fn(a), otherwise `0`
-Makes an ascending comparator function out of a function that returns a value that can be compared with < and >.
-
-See also descend.
-
+### ascend 
+`Ord b => (a → b) → a → a → Number`
+```
 var byAge = R.ascend(R.prop('age'));
 var people = [
   // ...
 ];
 var peopleByYoungestFirst = R.sort(byAge, people);
+```
 
-### assoc Added in v0.8.0
+### assoc
+`String → a → {k: v} → {k: v}`
 
-String → a → {k: v} → {k: v}
-Parameters
+```
+R.assoc('c', 3, {a: 1, b: 2}); 
+//=> {a: 1, b: 2, c: 3}
+```
+### assocPath
+`[Idx] → a → {a} → {a}`
+`Idx = String | Int`
 
-prop
-The property name to set
- val
-The new value
- obj
-The object to clone
-Returns
-
-Object A new object equivalent to the original except for the changed property.
-Makes a shallow clone of an object, setting or overriding the specified property with the given value. Note that this copies and flattens prototype properties onto the new object as well. All non-primitive properties are copied by reference.
-
-See also dissoc.
-
-R.assoc('c', 3, {a: 1, b: 2}); //=> {a: 1, b: 2, c: 3}
-
-### assocPath Added in v0.8.0
-
-[Idx] → a → {a} → {a}
-Idx = String | Int
-Parameters
-
-path
-the path to set
- val
-The new value
- obj
-The object to clone
-Returns
-
-Object A new object equivalent to the original except along the specified path.
-Makes a shallow clone of an object, setting or overriding the nodes required to create the given path, and placing the specific value at the tail end of that path. Note that this copies and flattens prototype properties onto the new object as well. All non-primitive properties are copied by reference.
-
-See also dissocPath.
-
+```
 R.assocPath(['a', 'b', 'c'], 42, {a: {b: {c: 0}}}); //=> {a: {b: {c: 42}}}
 
 // Any missing or non-object keys in path will be overridden
 R.assocPath(['a', 'b', 'c'], 42, {a: 5}); //=> {a: {b: {c: 42}}}
+```
 
-
-### binary Added in v0.2.0
-
-(* → c) → (a, b → c)
-Parameters
-
-fn
-The function to wrap.
-Returns
-
-function A new function wrapping `fn`. The new function is guaranteed to be of arity 2.
-Wraps a function of any arity (including nullary) in a function that accepts exactly 2 parameters. Any extraneous parameters will not be passed to the supplied function.
-
-See also nAry, unary.
-
+### binary
+`(* → c) → (a, b → c)`
+```
 var takesThreeArgs = function(a, b, c) {
   return [a, b, c];
 };
@@ -409,67 +195,29 @@ var takesTwoArgs = R.binary(takesThreeArgs);
 takesTwoArgs.length; //=> 2
 // Only 2 arguments are passed to the wrapped function
 takesTwoArgs(1, 2, 3); //=> [1, 2, undefined]
+```
 
-### bind Added in v0.6.0
-
-(* → *) → {*} → (* → *)
-Parameters
-
-fn
-The function to bind to context
- thisObj
-The context to bind fn to
-Returns
-
-function A function that will execute in the context of `thisObj`.
-Creates a function that is bound to a context. Note: R.bind does not provide the additional argument-binding capabilities of Function.prototype.bind.
-
-See also partial.
-
+### bind
+`(* → *) → {*} → (* → *)`
+```
 var log = R.bind(console.log, console);
 R.pipe(R.assoc('a', 2), R.tap(log), R.assoc('a', 3))({a: 1}); //=> {a: 3}
 // logs {a: 2}
+```
 
-
-### both Added in v0.12.0
-
-(*… → Boolean) → (*… → Boolean) → (*… → Boolean)
-Parameters
-
-f
-A predicate
- g
-Another predicate
-Returns
-
-function a function that applies its arguments to `f` and `g` and `&&`s their outputs together.
-A function which calls the two provided functions and returns the && of the results. It returns the result of the first function if it is false-y and the result of the second function otherwise. Note that this is short-circuited, meaning that the second function will not be invoked if the first returns a false-y value.
-
-In addition to functions, R.both also accepts any fantasy-land compatible applicative functor.
-
-See also and.
-
+### both
+`(*… → Boolean) → (*… → Boolean) → (*… → Boolean)`
+```
 var gt10 = R.gt(R.__, 10)
 var lt20 = R.lt(R.__, 20)
 var f = R.both(gt10, lt20);
 f(15); //=> true
 f(30); //=> false
-### call Added in v0.9.0
+```
 
-(*… → a),*… → a
-Parameters
-
-fn
-The function to apply to the remaining arguments.
- args
-Any number of positional arguments.
-Returns
-
-*
-Returns the result of calling its first argument with the remaining arguments. This is occasionally useful as a converging function for R.converge: the first branch can produce a function while the remaining branches produce values to be passed to that function as its arguments.
-
-See also apply.
-
+### call
+`(*… → a),*… → a`
+```
 R.call(R.add, 1, 2); //=> 3
 
 var indentN = R.pipe(R.repeat(' '),
@@ -482,146 +230,67 @@ var format = R.converge(R.call, [
                         ]);
 
 format({indent: 2, value: 'foo\nbar\nbaz\n'}); //=> '  foo\n  bar\n  baz\n'
+```
 
-
-### chain Added in v0.3.0
-
-Chain m => (a → m b) → m a → m b
-Parameters
-
-fn
-The function to map with
- list
-The list to map over
-Returns
-
-Array The result of flat-mapping `list` with `fn`
-chain maps a function over a list and concatenates the results. chain is also known as flatMap in some libraries
-
-Dispatches to the chain method of the second argument, if present, according to the FantasyLand Chain spec.
-
+### chain
+`Chain m => (a → m b) → m a → m b`
+```
 var duplicate = n => [n, n];
 R.chain(duplicate, [1, 2, 3]); //=> [1, 1, 2, 2, 3, 3]
 
 R.chain(R.append, R.head)([1, 2, 3]); //=> [1, 2, 3, 1]
+```
 
-### clamp Added in v0.20.0
-
-Ord a => a → a → a → a
-Parameters
-
-minimum
-The lower limit of the clamp (inclusive)
- maximum
-The upper limit of the clamp (inclusive)
- value
-Value to be clamped
-Returns
-
-Number Returns `minimum` when `val < minimum`, `maximum` when `val > maximum`, returns `val` otherwise
-Restricts a number to be within a range.
-
-Also works for other ordered types such as Strings and Dates.
-
+### clamp
+`Ord a => a → a → a → a`
+```
 R.clamp(1, 10, -5) // => 1
 R.clamp(1, 10, 15) // => 10
 R.clamp(1, 10, 4)  // => 4
-clone Added in v0.1.0
+```
 
-{*} → {*}
-Parameters
-
-value
-The object or array to clone
-Returns
-
-* A deeply cloned copy of `val`
-Creates a deep copy of the value which may contain (nested) Arrays and Objects, Numbers, Strings, Booleans and Dates. Functions are assigned by reference rather than copied
-
-Dispatches to a clone method if present.
-
+### clone
+`{*} → {*}`
+```
 var objects = [{}, {}, {}];
 var objectsClone = R.clone(objects);
 objects === objectsClone; //=> false
 objects[0] === objectsClone[0]; //=> false
+```
 
-### comparator Added in v0.1.0
-
-((a, b) → Boolean) → ((a, b) → Number)
-Parameters
-
-pred
-A predicate function of arity two which will return true if the first argument is less than the second, false otherwise
-Returns
-
-function A Function :: a -> b -> Int that returns `-1` if a < b, `1` if b < a, otherwise `0`
-Makes a comparator function out of a function that reports whether the first element is less than the second.
-
+### comparator
+`((a, b) → Boolean) → ((a, b) → Number)`
+```
 var byAge = R.comparator((a, b) => a.age < b.age);
 var people = [
   // ...
 ];
 var peopleByIncreasingAge = R.sort(byAge, people);
+```
 
-### complement Added in v0.12.0
-
-(*… → *) → (*… → Boolean)
-Parameters
-
-f
-Returns
-
-function
-Takes a function f and returns a function g such that if called with the same arguments when f returns a "truthy" value, g returns false and when f returns a "falsy" value g returns true.
-
-R.complement may be applied to any functor
-
-See also not.
-
+### complement
+`(*… → *) → (*… → Boolean)`
+```
 var isNotNil = R.complement(R.isNil);
 isNil(null); //=> true
 isNotNil(null); //=> false
 isNil(7); //=> false
 isNotNil(7); //=> true
+```
 
-### compose Added in v0.1.0
-
-((y → z), (x → y), …, (o → p), ((a, b, …, n) → o)) → ((a, b, …, n) → z)
-Parameters
-
-...functions
-The functions to compose
-Returns
-
-function
-Performs right-to-left function composition. The rightmost function may have any arity; the remaining functions must be unary.
-
-Note: The result of compose is not automatically curried.
-
-See also pipe.
-
+### compose
+`((y → z), (x → y), …, (o → p), ((a, b, …, n) → o)) → ((a, b, …, n) → z)`
+```
 var classyGreeting = (firstName, lastName) => "The name's " + lastName + ", " + firstName + " " + lastName
 var yellGreeting = R.compose(R.toUpper, classyGreeting);
 yellGreeting('James', 'Bond'); //=> "THE NAME'S BOND, JAMES BOND"
 
 R.compose(Math.abs, R.add(1), R.multiply(2))(-4) //=> 7
+```
 
-### composeK Added in v0.16.0
-
-Chain m => ((y → m z), (x → m y), …, (a → m b)) → (a → m z)
-Parameters
-
-...functions
-The functions to compose
-Returns
-
-function
-Returns the right-to-left Kleisli composition of the provided functions, each of which must return a value of a type supported by chain.
-
-R.composeK(h, g, f) is equivalent to R.compose(R.chain(h), R.chain(g), f).
-
-See also pipeK.
-
+### composeK
+`Chain m => ((y → m z), (x → m y), …, (a → m b)) → (a → m z)`
+```
 //  get :: String -> Object -> Maybe *
  var get = R.curry((propName, obj) => Maybe(obj[propName]))
 
@@ -634,20 +303,11 @@ See also pipeK.
  );
  getStateCode({"user":{"address":{"state":"ny"}}}); //=> Maybe.Just("NY")
  getStateCode({}); //=> Maybe.Nothing()
-composeP Added in v0.10.0
+```
 
-((y → Promise z), (x → Promise y), …, (a → Promise b)) → (a → Promise z)
-Parameters
-
-functions
-The functions to compose
-Returns
-
-function
-Performs right-to-left composition of one or more Promise-returning functions. The rightmost function may have any arity; the remaining functions must be unary.
-
-See also pipeP.
-
+### composeP
+`((y → Promise z), (x → Promise y), …, (a → Promise b)) → (a → Promise z)`
+```
 var db = {
   users: {
     JOE: {
@@ -666,41 +326,20 @@ lookupUser('JOE').then(lookupFollowers)
 var followersForUser = R.composeP(lookupFollowers, lookupUser);
 followersForUser('JOE').then(followers => console.log('Followers:', followers))
 // Followers: ["STEVE","SUZY"]
+```
 
-### concat Added in v0.1.0
-
-[a] → [a] → [a]
-String → String → String
-Parameters
-
-firstList
-The first list
- secondList
-The second list
-Returns
-
-Array A list consisting of the elements of `firstList` followed by the elements of `secondList`.
-Returns the result of concatenating the given lists or strings.
-
-Note: R.concat expects both arguments to be of the same type, unlike the native Array.prototype.concat method. It will throw an error if you concat an Array with a non-Array value.
-
-Dispatches to the concat method of the first argument, if present. Can also concatenate two members of a fantasy-land compatible semigroup.
-
+### concat 
+`[a] → [a] → [a]`
+`String → String → String`
+```
 R.concat('ABC', 'DEF'); // 'ABCDEF'
 R.concat([4, 5, 6], [1, 2, 3]); //=> [4, 5, 6, 1, 2, 3]
 R.concat([], []); //=> []
-### cond Added in v0.6.0
+```
 
-[[(*… → Boolean),(*… → *)]] → (*… → *)
-Parameters
-
-pairs
-A list of [predicate, transformer]
-Returns
-
-function
-Returns a function, fn, which encapsulates if/else, if/else, ... logic. R.cond takes a list of [predicate, transformer] pairs. All of the arguments to fn are applied to each of the predicates in turn until one returns a "truthy" value, at which point fn returns the result of applying its arguments to the corresponding transformer. If none of the predicates matches, fn returns undefined.
-
+### cond
+`[[(*… → Boolean),(*… → *)]] → (*… → *)`
+```
 var fn = R.cond([
   [R.equals(0),   R.always('water freezes at 0°C')],
   [R.equals(100), R.always('water boils at 100°C')],
@@ -709,20 +348,11 @@ var fn = R.cond([
 fn(0); //=> 'water freezes at 0°C'
 fn(50); //=> 'nothing special happens at 50°C'
 fn(100); //=> 'water boils at 100°C'
-construct Added in v0.1.0
+```
 
-(* → {*}) → (* → {*})
-Parameters
-
-fn
-The constructor function to wrap.
-Returns
-
-function A wrapped, curried constructor function.
-Wraps a constructor function inside a curried function that can be called with the same arguments and returns the same type.
-
-See also invoker.
-
+### construct
+`(* → {*}) → (* → {*})`
+```
 // Constructor function
 function Animal(kind) {
   this.kind = kind;
@@ -740,20 +370,11 @@ var animalTypes = ["Lion", "Tiger", "Bear"];
 var animalSighting = R.invoker(0, 'sighting');
 var sightNewAnimal = R.compose(animalSighting, AnimalConstructor);
 R.map(sightNewAnimal, animalTypes); //=> ["It's a Lion!", "It's a Tiger!", "It's a Bear!"]
-constructN Added in v0.4.0
+```
 
-Number → (* → {*}) → (* → {*})
-Parameters
-
-n
-The arity of the constructor function.
- Fn
-The constructor function to wrap.
-Returns
-
-function A wrapped, curried constructor function.
-Wraps a constructor function inside a curried function that can be called with the same arguments and returns the same type. The arity of the function returned is specified to allow using variadic constructor functions.
-
+### constructN
+`Number → (* → {*}) → (* → {*})`
+```
 // Variadic Constructor function
 function Salad() {
   this.ingredients = arguments;
@@ -773,164 +394,69 @@ console.log(salad.recipe());
 // Add a dollop of Mayonnaise
 // Add a dollop of Potato Chips
 // Add a dollop of Ketchup
-contains Added in v0.1.0
+```
 
-a → [a] → Boolean
-Parameters
-
-a
-The item to compare against.
- list
-The array to consider.
-Returns
-
-Boolean `true` if an equivalent item is in the list, `false` otherwise.
-Returns true if the specified value is equal, in R.equals terms, to at least one element of the given list; false otherwise.
-
-See also any.
-
+### contains
+`a → [a] → Boolean`
+```
 R.contains(3, [1, 2, 3]); //=> true
 R.contains(4, [1, 2, 3]); //=> false
 R.contains({ name: 'Fred' }, [{ name: 'Fred' }]); //=> true
 R.contains([42], [[42]]); //=> true
-converge Added in v0.4.2
+```
 
-((x1, x2, …) → z) → [((a, b, …) → x1), ((a, b, …) → x2), …] → (a → b → … → z)
-Parameters
-
-after
-A function. after will be invoked with the return values of fn1 and fn2 as its arguments.
- functions
-A list of functions.
-Returns
-
-function A new function.
-Accepts a converging function and a list of branching functions and returns a new function. When invoked, this new function is applied to some arguments, each branching function is applied to those same arguments. The results of each branching function are passed as arguments to the converging function to produce the return value.
-
-See also useWith.
-
+### converge
+`((x1, x2, …) → z) → [((a, b, …) → x1), ((a, b, …) → x2), …] → (a → b → … → z)`
+```
 var average = R.converge(R.divide, [R.sum, R.length])
 average([1, 2, 3, 4, 5, 6, 7]) //=> 4
 
 var strangeConcat = R.converge(R.concat, [R.toUpper, R.toLower])
 strangeConcat("Yodel") //=> "YODELyodel"
-countBy Added in v0.1.0
+```
 
-(a → String) → [a] → {*}
-Parameters
-
-fn
-The function used to map values to keys.
- list
-The list to count elements from.
-Returns
-
-Object An object mapping keys to number of occurrences in the list.
-Counts the elements of a list according to how many match each value of a key generated by the supplied function. Returns an object mapping the keys produced by fn to the number of occurrences in the list. Note that all keys are coerced to strings because of how JavaScript objects work.
-
-Acts as a transducer if a transformer is given in list position.
-
+### countBy
+`(a → String) → [a] → {*}`
+```
 var numbers = [1.0, 1.1, 1.2, 2.0, 3.0, 2.2];
 R.countBy(Math.floor)(numbers);    //=> {'1': 3, '2': 2, '3': 1}
 
 var letters = ['a', 'b', 'A', 'a', 'B', 'c'];
 R.countBy(R.toLower)(letters);   //=> {'a': 3, 'b': 2, 'c': 1}
-curry Added in v0.1.0
+```
 
-(* → a) → (* → a)
-Parameters
-
-fn
-The function to curry.
-Returns
-
-function A new, curried function.
-Returns a curried equivalent of the provided function. The curried function has two unusual capabilities. First, its arguments needn't be provided one at a time. If f is a ternary function and g is R.curry(f), the following are equivalent:
-
-g(1)(2)(3)
-g(1)(2, 3)
-g(1, 2)(3)
-g(1, 2, 3)
-Secondly, the special placeholder value R.__ may be used to specify "gaps", allowing partial application of any combination of arguments, regardless of their positions. If g is as above and _ is R.__, the following are equivalent:
-
-g(1, 2, 3)
-g(_, 2, 3)(1)
-g(_, _, 3)(1)(2)
-g(_, _, 3)(1, 2)
-g(_, 2)(1)(3)
-g(_, 2)(1, 3)
-g(_, 2)(_, 3)(1)
-See also curryN.
-
+### curry
+`(* → a) → (* → a)`
+```
 var addFourNumbers = (a, b, c, d) => a + b + c + d;
 
 var curriedAddFourNumbers = R.curry(addFourNumbers);
 var f = curriedAddFourNumbers(1, 2);
 var g = f(3);
 g(4); //=> 10
-curryN Added in v0.5.0
+```
 
-Number → (* → a) → (* → a)
-Parameters
-
-length
-The arity for the returned function.
- fn
-The function to curry.
-Returns
-
-function A new, curried function.
-Returns a curried equivalent of the provided function, with the specified arity. The curried function has two unusual capabilities. First, its arguments needn't be provided one at a time. If g is R.curryN(3, f), the following are equivalent:
-
-g(1)(2)(3)
-g(1)(2, 3)
-g(1, 2)(3)
-g(1, 2, 3)
-Secondly, the special placeholder value R.__ may be used to specify "gaps", allowing partial application of any combination of arguments, regardless of their positions. If g is as above and _ is R.__, the following are equivalent:
-
-g(1, 2, 3)
-g(_, 2, 3)(1)
-g(_, _, 3)(1)(2)
-g(_, _, 3)(1, 2)
-g(_, 2)(1)(3)
-g(_, 2)(1, 3)
-g(_, 2)(_, 3)(1)
-See also curry.
-
+### curryN
+`Number → (* → a) → (* → a)`
+```
 var sumArgs = (...args) => R.sum(args);
 
 var curriedAddFourNumbers = R.curryN(4, sumArgs);
 var f = curriedAddFourNumbers(1, 2);
 var g = f(3);
 g(4); //=> 10
-dec Added in v0.9.0
+```
 
-Number → Number
-Parameters
+### dec
+`Number → Number`
+```
+R.dec(42); 
+//=> 41
+```
 
-n
-Returns
-
-Number n - 1
-Decrements its argument.
-
-See also inc.
-
-R.dec(42); //=> 41
-defaultTo Added in v0.10.0
-
-a → b → a | b
-Parameters
-
-default
-The default value.
- val
-val will be returned instead of default unless val is null, undefined or NaN.
-Returns
-
-* The second value if it is not `null`, `undefined` or `NaN`, otherwise the default value
-Returns the second argument if it is not null, undefined or NaN; otherwise the first argument is returned.
-
+### defaultTo
+`a → b → a | b`
+```
 var defaultTo42 = R.defaultTo(42);
 
 defaultTo42(null);  //=> 42
@@ -938,121 +464,51 @@ defaultTo42(undefined);  //=> 42
 defaultTo42('Ramda');  //=> 'Ramda'
 // parseInt('string') results in NaN
 defaultTo42(parseInt('string')); //=> 42
-descend Added in v0.23.0
+```
 
-Ord b => (a → b) → a → a → Number
-Parameters
-
-fn
-A function of arity one that returns a value that can be compared
- a
-The first item to be compared.
- b
-The second item to be compared.
-Returns
-
-Number `-1` if fn(a) > fn(b), `1` if fn(b) > fn(a), otherwise `0`
-Makes a descending comparator function out of a function that returns a value that can be compared with < and >.
-
-See also ascend.
-
+### descend
+`Ord b => (a → b) → a → a → Number`
+```
 var byAge = R.descend(R.prop('age'));
 var people = [
   // ...
 ];
 var peopleByOldestFirst = R.sort(byAge, people);
-difference Added in v0.1.0
+```
 
-[*] → [*] → [*]
-Parameters
-
-list1
-The first list.
- list2
-The second list.
-Returns
-
-Array The elements in `list1` that are not in `list2`.
-Finds the set (i.e. no duplicates) of all elements in the first list not contained in the second list. Objects and Arrays are compared in terms of value equality, not reference equality.
-
-See also differenceWith, symmetricDifference, symmetricDifferenceWith, without.
-
+### difference
+`[*] → [*] → [*]`
+```
 R.difference([1,2,3,4], [7,6,5,4,3]); //=> [1,2]
 R.difference([7,6,5,4,3], [1,2,3,4]); //=> [7,6,5]
 R.difference([{a: 1}, {b: 2}], [{a: 1}, {c: 3}]) //=> [{b: 2}]
-differenceWith Added in v0.1.0
+```
 
-((a, a) → Boolean) → [a] → [a] → [a]
-Parameters
-
-pred
-A predicate used to test whether two items are equal.
- list1
-The first list.
- list2
-The second list.
-Returns
-
-Array The elements in `list1` that are not in `list2`.
-Finds the set (i.e. no duplicates) of all elements in the first list not contained in the second list. Duplication is determined according to the value returned by applying the supplied predicate to two list elements.
-
-See also difference, symmetricDifference, symmetricDifferenceWith.
-
+### differenceWith
+`((a, a) → Boolean) → [a] → [a] → [a]`
+```
 var cmp = (x, y) => x.a === y.a;
 var l1 = [{a: 1}, {a: 2}, {a: 3}];
 var l2 = [{a: 3}, {a: 4}];
 R.differenceWith(cmp, l1, l2); //=> [{a: 1}, {a: 2}]
-dissoc Added in v0.10.0
+```
 
-String → {k: v} → {k: v}
-Parameters
-
-prop
-The name of the property to dissociate
- obj
-The object to clone
-Returns
-
-Object A new object equivalent to the original but without the specified property
-Returns a new object that does not contain a prop property.
-
-See also assoc.
-
+### dissoc
+`String → {k: v} → {k: v}`
+```
 R.dissoc('b', {a: 1, b: 2, c: 3}); //=> {a: 1, c: 3}
-dissocPath Added in v0.11.0
+```
 
-[Idx] → {k: v} → {k: v}
-Idx = String | Int
-Parameters
-
-path
-The path to the value to omit
- obj
-The object to clone
-Returns
-
-Object A new object without the property at path
-Makes a shallow clone of an object, omitting the property at the given path. Note that this copies and flattens prototype properties onto the new object as well. All non-primitive properties are copied by reference.
-
-See also assocPath.
-
+### dissocPath
+`[Idx] → {k: v} → {k: v}`
+`Idx = String | Int`
+```
 R.dissocPath(['a', 'b', 'c'], {a: {b: {c: 42}}}); //=> {a: {b: {}}}
-divide Added in v0.1.0
+```
 
-Number → Number → Number
-Parameters
-
-a
-The first value.
- b
-The second value.
-Returns
-
-Number The result of `a / b`.
-Divides two numbers. Equivalent to a / b.
-
-See also multiply.
-
+### divide
+`Number → Number → Number`
+```
 R.divide(71, 100); //=> 0.71
 
 var half = R.divide(R.__, 2);
@@ -1060,90 +516,49 @@ half(42); //=> 21
 
 var reciprocal = R.divide(1);
 reciprocal(4);   //=> 0.25
-drop Added in v0.1.0
+```
 
-Number → [a] → [a]
-Number → String → String
-Parameters
-
-n
-list
-Returns
-
-* A copy of list without the first `n` elements
-Returns all but the first n elements of the given list, string, or transducer/transformer (or object with a drop method).
-
-Dispatches to the drop method of the second argument, if present.
-
-See also take, transduce, dropLast, dropWhile.
-
+### drop
+`Number → [a] → [a]`
+`Number → String → String`
+```
 R.drop(1, ['foo', 'bar', 'baz']); //=> ['bar', 'baz']
 R.drop(2, ['foo', 'bar', 'baz']); //=> ['baz']
 R.drop(3, ['foo', 'bar', 'baz']); //=> []
 R.drop(4, ['foo', 'bar', 'baz']); //=> []
 R.drop(3, 'ramda');               //=> 'da'
-dropLast Added in v0.16.0
+```
 
-Number → [a] → [a]
-Number → String → String
-Parameters
-
-n
-The number of elements of list to skip.
- list
-The list of elements to consider.
-Returns
-
-Array A copy of the list with only the first `list.length - n` elements
-Returns a list containing all but the last n elements of the given list.
-
-See also takeLast, drop, dropWhile, dropLastWhile.
-
+### dropLast
+`Number → [a] → [a]`
+`Number → String → String`
+```
 R.dropLast(1, ['foo', 'bar', 'baz']); //=> ['foo', 'bar']
 R.dropLast(2, ['foo', 'bar', 'baz']); //=> ['foo']
 R.dropLast(3, ['foo', 'bar', 'baz']); //=> []
 R.dropLast(4, ['foo', 'bar', 'baz']); //=> []
-R.dropLast(3, 'ramda');               //=> 'ra'
-dropLastWhile Added in v0.16.0
+R.dropLast(3, 'ramda');   
+//=> 'ra'
+```
 
-(a → Boolean) → [a] → [a]
-(a → Boolean) → String → String
-Parameters
-
-predicate
-The function to be called on each element
- xs
-The collection to iterate over.
-Returns
-
-Array A new array without any trailing elements that return `falsy` values from the `predicate`.
-Returns a new list excluding all the tailing elements of a given list which satisfy the supplied predicate function. It passes each value from the right to the supplied predicate function, skipping elements until the predicate function returns a falsy value. The predicate function is applied to one argument: (value).
-
-See also takeLastWhile, addIndex, drop, dropWhile.
-
+### dropLastWhile
+`(a → Boolean) → [a] → [a]`
+`(a → Boolean) → String → String`
+```
 var lteThree = x => x <= 3;
 
 R.dropLastWhile(lteThree, [1, 2, 3, 4, 3, 2, 1]); //=> [1, 2, 3, 4]
 
 R.dropLastWhile(x => x !== 'd' , 'Ramda'); //=> 'Ramd'
-dropRepeats Added in v0.14.0
+```
 
-[a] → [a]
-Parameters
-
-list
-The array to consider.
-Returns
-
-Array `list` without repeating elements.
-Returns a new list without any consecutively repeating elements. R.equals is used to determine equality.
-
-Acts as a transducer if a transformer is given in list position.
-
-See also transduce.
-
+### dropRepeats
+`[a] → [a]`
+```
 R.dropRepeats([1, 1, 1, 2, 3, 4, 4, 2, 2]); //=> [1, 2, 3, 4, 2]
-dropRepeatsWith Added in v0.14.0
+```
+
+### dropRepeatsWith
 
 ((a, a) → Boolean) → [a] → [a]
 Parameters
