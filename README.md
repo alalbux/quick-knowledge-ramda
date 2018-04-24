@@ -4828,7 +4828,9 @@ Returns
 Takes a predicate, a transformation function, and an initial value, and returns a value of the same type as the initial value. It does so by applying the transformation until the predicate is satisfied, at which point it returns the satisfactory value.
 
 R.until(R.gt(R.__, 100), R.multiply(2))(1) // => 128
-update Added in v0.14.0
+
+
+### update
 
 Number → a → [a] → [a]
 Parameters
@@ -4848,8 +4850,9 @@ See also adjust.
 
 R.update(1, 11, [0, 1, 2]);     //=> [0, 11, 2]
 R.update(1)(11)([0, 1, 2]);     //=> [0, 11, 2]
-useWith Added in v0.1.0
 
+
+### useWith 
 ((x1, x2, …) → z) → [(a → x1), (b → x2), …] → (a → b → … → z)
 Parameters
 
@@ -4885,7 +4888,9 @@ Returns a list of all the enumerable own properties of the supplied object. Note
 See also valuesIn, keys.
 
 R.values({a: 1, b: 2, c: 3}); //=> [1, 2, 3]
-valuesIn Added in v0.2.0
+
+
+### valuesIn
 
 {k: v} → [v]
 Parameters
@@ -4903,7 +4908,8 @@ var F = function() { this.x = 'X'; };
 F.prototype.y = 'Y';
 var f = new F();
 R.valuesIn(f); //=> ['X', 'Y']
-view Added in v0.16.0
+
+### view
 
 Lens s a → s → a
 Lens s a = Functor f => (a → f a) → s → f s
@@ -4922,8 +4928,8 @@ var xLens = R.lensProp('x');
 
 R.view(xLens, {x: 1, y: 2});  //=> 1
 R.view(xLens, {x: 4, y: 2});  //=> 4
-when Added in v0.18.0
 
+### when
 (a → Boolean) → (a → a) → a → a
 Parameters
 
@@ -4947,9 +4953,11 @@ var truncate = R.when(
 );
 truncate('12345');         //=> '12345'
 truncate('0123456789ABC'); //=> '0123456789…'
-where Added in v0.1.1
 
-{String: (* → Boolean)} → {String: *} → Boolean
+
+### where
+
+```{String: (* → Boolean)} → {String: *} → Boolean```
 Parameters
 
 spec
@@ -4962,7 +4970,7 @@ Takes a spec object and a test object; returns true if the test satisfies the sp
 where is well suited to declaratively expressing constraints for other functions such as filter and find.
 
 See also propSatisfies, whereEq.
-
+```
 // pred :: Object -> Boolean
 var pred = R.where({
   a: R.equals('foo'),
@@ -4976,9 +4984,13 @@ pred({a: 'xxx', b: 'xxx', x: 11, y: 19}); //=> false
 pred({a: 'foo', b: 'bar', x: 11, y: 19}); //=> false
 pred({a: 'foo', b: 'xxx', x: 10, y: 19}); //=> false
 pred({a: 'foo', b: 'xxx', x: 11, y: 20}); //=> false
-whereEq Added in v0.14.0
+```
 
+### whereEq
+
+```js
 {String: *} → {String: *} → Boolean
+```
 Parameters
 
 spec
@@ -4992,6 +5004,7 @@ whereEq is a specialization of where.
 
 See also propEq, where.
 
+```js
 // pred :: Object -> Boolean
 var pred = R.whereEq({a: 1, b: 2});
 
@@ -4999,7 +5012,8 @@ pred({a: 1});              //=> false
 pred({a: 1, b: 2});        //=> true
 pred({a: 1, b: 2, c: 3});  //=> true
 pred({a: 1, b: 1});        //=> false
-without Added in v0.19.0
+```
+### without
 
 [a] → [a] → [a]
 Parameters
@@ -5018,7 +5032,8 @@ Acts as a transducer if a transformer is given in list position.
 See also transduce, difference.
 
 R.without([1, 2], [1, 2, 1, 3, 4]); //=> [3, 4]
-xprod Added in v0.1.0
+
+### xprod
 
 [a] → [b] → [[a,b]]
 Parameters
@@ -5033,8 +5048,8 @@ Array The list made by combining each possible pair from `as` and `bs` into pair
 Creates a new list out of the two supplied by creating each possible pair from the lists.
 
 R.xprod([1, 2], ['a', 'b']); //=> [[1, 'a'], [1, 'b'], [2, 'a'], [2, 'b']]
-zip Added in v0.1.0
 
+### zip
 [a] → [b] → [[a,b]]
 Parameters
 
@@ -5048,11 +5063,12 @@ Array The list made by pairing up same-indexed elements of `list1` and `list2`.
 Creates a new list out of the two supplied by pairing up equally-positioned items from both lists. The returned list is truncated to the length of the shorter of the two input lists. Note: zip is equivalent to zipWith(function(a, b) { return [a, b] }).
 
 R.zip([1, 2, 3], ['a', 'b', 'c']); //=> [[1, 'a'], [2, 'b'], [3, 'c']]
-zipObj Added in v0.3.0
 
+### zipObj
+```js
 [String] → [*] → {String: *}
+```
 Parameters
-
 keys
 The array that will be properties on the output object.
  values
@@ -5061,27 +5077,25 @@ Returns
 
 Object The object made by pairing up same-indexed elements of `keys` and `values`.
 Creates a new object out of a list of keys and a list of values. Key/value pairing is truncated to the length of the shorter of the two lists. Note: zipObj is equivalent to pipe(zip, fromPairs).
-
+```js
 R.zipObj(['a', 'b', 'c'], [1, 2, 3]); //=> {a: 1, b: 2, c: 3}
-zipWith Added in v0.1.0
+```
+### zipWith
 
 ((a, b) → c) → [a] → [b] → [c]
 Parameters
+fn - The function used to combine the two elements into one value.
+list1 - The first array to consider.
+list2 - The second array to consider.
 
-fn
-The function used to combine the two elements into one value.
- list1
-The first array to consider.
- list2
-The second array to consider.
 Returns
-
 Array The list made by combining same-indexed elements of `list1` and `list2` using `fn`.
 Creates a new list out of the two supplied by applying the function to each equally-positioned pair in the lists. The returned list is truncated to the length of the shorter of the two input lists.
-
+```js
 var f = (x, y) => {
   // ...
 };
 R.zipWith(f, [1, 2, 3], ['a', 'b', 'c']);
 //=> [f(1, 'a'), f(2, 'b'), f(3, 'c')]
 
+```
