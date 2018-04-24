@@ -1102,22 +1102,11 @@ R.set(headLens, 'x', ['a', 'b', 'c']);        //=> ['x', 'b', 'c']
 R.over(headLens, R.toUpper, ['a', 'b', 'c']); //=> ['A', 'b', 'c']
 ```
 
-lensPath Added in v0.19.0
-
-[Idx] → Lens s a
-Idx = String | Int
-Lens s a = Functor f => (a → f a) → s → f s
-Parameters
-
-path
-The path to use.
-Returns
-
-Lens
-Returns a lens whose focus is the specified path.
-
-See also view, set, over.
-
+### lensPath
+`[Idx] → Lens s a`
+`Idx = String | Int`
+`Lens s a = Functor f => (a → f a) → s → f s`
+```
 var xHeadYLens = R.lensPath(['x', 0, 'y']);
 
 R.view(xHeadYLens, {x: [{y: 2, z: 3}, {y: 4, z: 5}]});
@@ -1126,39 +1115,22 @@ R.set(xHeadYLens, 1, {x: [{y: 2, z: 3}, {y: 4, z: 5}]});
 //=> {x: [{y: 1, z: 3}, {y: 4, z: 5}]}
 R.over(xHeadYLens, R.negate, {x: [{y: 2, z: 3}, {y: 4, z: 5}]});
 //=> {x: [{y: -2, z: 3}, {y: 4, z: 5}]}
-lensProp Added in v0.14.0
+```
 
-String → Lens s a
-Lens s a = Functor f => (a → f a) → s → f s
-Parameters
-
-k
-Returns
-
-Lens
-Returns a lens whose focus is the specified property.
-
-See also view, set, over.
-
+### lensProp
+`String → Lens s a`
+`Lens s a = Functor f => (a → f a) → s → f s`
+```
 var xLens = R.lensProp('x');
 
 R.view(xLens, {x: 1, y: 2});            //=> 1
 R.set(xLens, 4, {x: 1, y: 2});          //=> {x: 4, y: 2}
 R.over(xLens, R.negate, {x: 1, y: 2});  //=> {x: -1, y: 2}
-lift Added in v0.7.0
+```
 
-(*… → *) → ([*]… → [*])
-Parameters
-
-fn
-The function to lift into higher context
-Returns
-
-function The lifted function.
-"lifts" a function of arity > 1 so that it may "map over" a list, Function or other object that satisfies the FantasyLand Apply spec.
-
-See also liftN.
-
+### lift
+`(*… → *) → ([*]… → [*])`
+```
 var madd3 = R.lift((a, b, c) => a + b + c);
 
 madd3([1,2,3], [1,2,3], [1]); //=> [3, 4, 5, 4, 5, 6, 5, 6, 7]
@@ -1166,192 +1138,83 @@ madd3([1,2,3], [1,2,3], [1]); //=> [3, 4, 5, 4, 5, 6, 5, 6, 7]
 var madd5 = R.lift((a, b, c, d, e) => a + b + c + d + e);
 
 madd5([1,2], [3], [4, 5], [6], [7, 8]); //=> [21, 22, 22, 23, 22, 23, 23, 24]
-liftN Added in v0.7.0
+```
 
-Number → (*… → *) → ([*]… → [*])
-Parameters
-
-fn
-The function to lift into higher context
-Returns
-
-function The lifted function.
-"lifts" a function to be the specified arity, so that it may "map over" that many lists, Functions or other objects that satisfy the FantasyLand Apply spec.
-
-See also lift, ap.
-
+### liftN
+`Number → (*… → *) → ([*]… → [*])`
+```
 var madd3 = R.liftN(3, (...args) => R.sum(args));
 madd3([1,2,3], [1,2,3], [1]); //=> [3, 4, 5, 4, 5, 6, 5, 6, 7]
-lt Added in v0.1.0
+```
 
-Ord a => a → a → Boolean
-Parameters
-
-a
-b
-Returns
-
-Boolean
-Returns true if the first argument is less than the second; false otherwise.
-
-See also gt.
-
+### lt
+`Ord a => a → a → Boolean`
+```
 R.lt(2, 1); //=> false
 R.lt(2, 2); //=> false
 R.lt(2, 3); //=> true
 R.lt('a', 'z'); //=> true
 R.lt('z', 'a'); //=> false
-lte Added in v0.1.0
+```
 
-Ord a => a → a → Boolean
-Parameters
-
-a
-b
-Returns
-
-Boolean
-Returns true if the first argument is less than or equal to the second; false otherwise.
-
-See also gte.
-
+### lte
+`Ord a => a → a → Boolean`
+```
 R.lte(2, 1); //=> false
 R.lte(2, 2); //=> true
 R.lte(2, 3); //=> true
 R.lte('a', 'z'); //=> true
 R.lte('z', 'a'); //=> false
-map Added in v0.1.0
+```
 
-Functor f => (a → b) → f a → f b
-Parameters
-
-fn
-The function to be called on every element of the input list.
- list
-The list to be iterated over.
-Returns
-
-Array The new list.
-Takes a function and a functor, applies the function to each of the functor's values, and returns a functor of the same shape.
-
-Ramda provides suitable map implementations for Array and Object, so this function may be applied to [1, 2, 3] or {x: 1, y: 2, z: 3}.
-
-Dispatches to the map method of the second argument, if present.
-
-Acts as a transducer if a transformer is given in list position.
-
-Also treats functions as functors and will compose them together.
-
-See also transduce, addIndex.
-
+### map
+`Functor f => (a → b) → f a → f b`
+```
 var double = x => x * 2;
 
 R.map(double, [1, 2, 3]); //=> [2, 4, 6]
 
 R.map(double, {x: 1, y: 2, z: 3}); //=> {x: 2, y: 4, z: 6}
-mapAccum Added in v0.10.0
+```
 
-((acc, x) → (acc, y)) → acc → [x] → (acc, [y])
-Parameters
-
-fn
-The function to be called on every element of the input list.
- acc
-The accumulator value.
- list
-The list to iterate over.
-Returns
-
-* The final, accumulated value.
-The mapAccum function behaves like a combination of map and reduce; it applies a function to each element of a list, passing an accumulating parameter from left to right, and returning a final value of this accumulator together with the new list.
-
-The iterator function receives two arguments, acc and value, and should return a tuple [acc, value].
-
-See also addIndex, mapAccumRight.
-
+### mapAccum 
+`((acc, x) → (acc, y)) → acc → [x] → (acc, [y])`
+```
 var digits = ['1', '2', '3', '4'];
 var appender = (a, b) => [a + b, a + b];
 
 R.mapAccum(appender, 0, digits); //=> ['01234', ['01', '012', '0123', '01234']]
-mapAccumRight Added in v0.10.0
+```
 
-((x, acc) → (y, acc)) → acc → [x] → ([y], acc)
-Parameters
-
-fn
-The function to be called on every element of the input list.
- acc
-The accumulator value.
- list
-The list to iterate over.
-Returns
-
-* The final, accumulated value.
-The mapAccumRight function behaves like a combination of map and reduce; it applies a function to each element of a list, passing an accumulating parameter from right to left, and returning a final value of this accumulator together with the new list.
-
-Similar to mapAccum, except moves through the input list from the right to the left.
-
-The iterator function receives two arguments, value and acc, and should return a tuple [value, acc].
-
-See also addIndex, mapAccum.
-
+### mapAccumRight
+`((x, acc) → (y, acc)) → acc → [x] → ([y], acc)`
+```
 var digits = ['1', '2', '3', '4'];
 var append = (a, b) => [a + b, a + b];
 
 R.mapAccumRight(append, 5, digits); //=> [['12345', '2345', '345', '45'], '12345']
-mapObjIndexed Added in v0.9.0
+```
 
-((*, String, Object) → *) → Object → Object
-Parameters
-
-fn
-obj
-Returns
-
-Object
-An Object-specific version of map. The function is applied to three arguments: (value, key, obj). If only the value is significant, use map instead.
-
-See also map.
-
+### mapObjIndexed
+`((*, String, Object) → *) → Object → Object`
+```
 var values = { x: 1, y: 2, z: 3 };
 var prependKeyAndDouble = (num, key, obj) => key + (num * 2);
 
 R.mapObjIndexed(prependKeyAndDouble, values); //=> { x: 'x2', y: 'y4', z: 'z6' }
-match Added in v0.1.0
+```
 
-RegExp → String → [String | Undefined]
-Parameters
-
-rx
-A regular expression.
- str
-The string to match against
-Returns
-
-Array The list of matches or empty array.
-Tests a regular expression against a String. Note that this function will return an empty array when there are no matches. This differs from String.prototype.match which returns null when there are no matches.
-
-See also test.
-
+### match
+`RegExp → String → [String | Undefined]`
+```
 R.match(/([a-z]a)/g, 'bananas'); //=> ['ba', 'na', 'na']
 R.match(/a/, 'b'); //=> []
 R.match(/a/, null); //=> TypeError: null does not have a method named "match"
-mathMod Added in v0.3.0
+```
 
-Number → Number → Number
-Parameters
-
-m
-The dividend.
- p
-the modulus.
-Returns
-
-Number The result of `b mod a`.
-mathMod behaves like the modulo operator should mathematically, unlike the % operator (and by extension, R.modulo). So while -17 % 5 is -2, mathMod(-17, 5) is 3. mathMod requires Integer arguments, and returns NaN when the modulus is zero or negative.
-
-See also modulo.
-
+### mathMod
+`Number → Number → Number`
+```
 R.mathMod(-17, 5);  //=> 3
 R.mathMod(17, 5);   //=> 2
 R.mathMod(17, -5);  //=> NaN
@@ -1367,37 +1230,18 @@ var seventeenMod = R.mathMod(17);
 seventeenMod(3);  //=> 2
 seventeenMod(4);  //=> 1
 seventeenMod(10); //=> 7
-max Added in v0.1.0
+```
 
-Ord a => a → a → a
-Parameters
-
-a
-b
-Returns
-
-*
-Returns the larger of its two arguments.
-
-See also maxBy, min.
-
+### max
+`Ord a => a → a → a`
+```
 R.max(789, 123); //=> 789
 R.max('a', 'b'); //=> 'b'
-maxBy Added in v0.8.0
+```
 
-Ord b => (a → b) → a → a → a
-Parameters
-
-f
-a
-b
-Returns
-
-*
-Takes a function and two values, and returns whichever value produces the larger result when passed to the provided function.
-
-See also max, minBy.
-
+### maxBy
+`Ord b => (a → b) → a → a → a`
+```
 //  square :: Number -> Number
 var square = n => n * n;
 
@@ -1405,77 +1249,26 @@ R.maxBy(square, -3, 2); //=> -3
 
 R.reduce(R.maxBy(square), 0, [3, -5, 4, 1, -2]); //=> -5
 R.reduce(R.maxBy(square), 0, []); //=> 0
-mean Added in v0.14.0
+```
 
-[Number] → Number
-Parameters
-
-list
-Returns
-
-Number
-Returns the mean of the given list of numbers.
-
-See also median.
-
+### mean
+`[Number] → Number`
+```
 R.mean([2, 7, 9]); //=> 6
 R.mean([]); //=> NaN
-median Added in v0.14.0
+```
 
-[Number] → Number
-Parameters
-
-list
-Returns
-
-Number
-Returns the median of the given list of numbers.
-
-See also mean.
-
+### median
+`[Number] → Number`
+```
 R.median([2, 9, 7]); //=> 7
 R.median([7, 2, 10, 9]); //=> 8
 R.median([]); //=> NaN
-memoize Added in v0.1.0
+```
 
-Deprecated since v0.25.0
-(*… → a) → (*… → a)
-Parameters
-
-fn
-The function to memoize.
-Returns
-
-function Memoized version of `fn`.
-Creates a new function that, when invoked, caches the result of calling fn for a given argument set and returns the result. Subsequent calls to the memoized fn with the same argument set will not result in an additional call to fn; instead, the cached result for that set of arguments will be returned.
-
-See also memoizeWith.
-
-let count = 0;
-const factorial = R.memoize(n => {
-  count += 1;
-  return R.product(R.range(1, n + 1));
-});
-factorial(5); //=> 120
-factorial(5); //=> 120
-factorial(5); //=> 120
-count; //=> 1
-memoizeWith Added in v0.24.0
-
-(*… → String) → (*… → a) → (*… → a)
-Parameters
-
-fn
-The function to generate the cache key.
- fn
-The function to memoize.
-Returns
-
-function Memoized version of `fn`.
-A customisable version of R.memoize. memoizeWith takes an additional function that will be applied to a given argument set and used to create the cache key under which the results of the function to be memoized will be stored. Care must be taken when implementing key generation to avoid clashes that may overwrite previous entries erroneously.
-
-See also memoize.
-
+### memoizeWith
+`(*… → String) → (*… → a) → (*… → a)`
+```
 let count = 0;
 const factorial = R.memoizeWith(R.identity, n => {
   count += 1;
@@ -1485,41 +1278,25 @@ factorial(5); //=> 120
 factorial(5); //=> 120
 factorial(5); //=> 120
 count; //=> 1
-merge Added in v0.1.0
+```
 
-{k: v} → {k: v} → {k: v}
-Parameters
-
-l
-r
-Returns
-
-Object
-Create a new object with the own properties of the first object merged with the own properties of the second object. If a key exists in both objects, the value from the second object will be used.
-
-See also mergeDeepRight, mergeWith, mergeWithKey.
-
+### merge
+`{k: v} → {k: v} → {k: v}`
+```
 R.merge({ 'name': 'fred', 'age': 10 }, { 'age': 40 });
 //=> { 'name': 'fred', 'age': 40 }
 
 var resetToDefault = R.merge(R.__, {x: 0});
 resetToDefault({x: 5, y: 2}); //=> {x: 0, y: 2}
-mergeAll Added in v0.10.0
+```
 
-[{k: v}] → {k: v}
-Parameters
-
-list
-An array of objects
-Returns
-
-Object A merged object.
-Merges a list of objects together into one object.
-
-See also reduce.
-
+### mergeAll
+`[{k: v}] → {k: v}`
+```
 R.mergeAll([{foo:1},{bar:2},{baz:3}]); //=> {foo:1,bar:2,baz:3}
 R.mergeAll([{foo:1},{foo:2},{bar:2}]); //=> {foo:2,bar:2}
+```
+
 mergeDeepLeft Added in v0.24.0
 
 {a} → {a} → {a}
