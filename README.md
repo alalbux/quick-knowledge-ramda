@@ -1297,45 +1297,23 @@ R.mergeAll([{foo:1},{bar:2},{baz:3}]); //=> {foo:1,bar:2,baz:3}
 R.mergeAll([{foo:1},{foo:2},{bar:2}]); //=> {foo:2,bar:2}
 ```
 
-mergeDeepLeft Added in v0.24.0
-
-{a} → {a} → {a}
-Parameters
-
-lObj
-rObj
-Returns
-
-Object
-Creates a new object with the own properties of the first object merged with the own properties of the second object. If a key exists in both objects:
-
-and both values are objects, the two values will be recursively merged
-otherwise the value from the first object will be used.
-See also merge, mergeDeepRight, mergeDeepWith, mergeDeepWithKey.
-
+### mergeDeepLeft
+`{a} → {a} → {a}`
+```
 R.mergeDeepLeft({ name: 'fred', age: 10, contact: { email: 'moo@example.com' }},
                 { age: 40, contact: { email: 'baa@example.com' }});
 //=> { name: 'fred', age: 10, contact: { email: 'moo@example.com' }}
-mergeDeepRight Added in v0.24.0
+```
 
-{a} → {a} → {a}
-Parameters
-
-lObj
-rObj
-Returns
-
-Object
-Creates a new object with the own properties of the first object merged with the own properties of the second object. If a key exists in both objects:
-
-and both values are objects, the two values will be recursively merged
-otherwise the value from the second object will be used.
-See also merge, mergeDeepLeft, mergeDeepWith, mergeDeepWithKey.
-
+### mergeDeepRight
+`{a} → {a} → {a}`
+```
 R.mergeDeepRight({ name: 'fred', age: 10, contact: { email: 'moo@example.com' }},
                  { age: 40, contact: { email: 'baa@example.com' }});
 //=> { name: 'fred', age: 40, contact: { email: 'baa@example.com' }}
-mergeDeepWith Added in v0.24.0
+```
+
+### mergeDeepWith Added in v0.24.0
 
 ((a, a) → a) → {a} → {a} → {a}
 Parameters
