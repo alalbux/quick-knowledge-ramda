@@ -3512,100 +3512,45 @@ Acts as a transducer if a transformer is given as second parameter.
 var sayX = x => console.log('x is ' + x);
 R.tap(sayX, 100); //=> 100
 // logs 'x is 100'
-test Added in v0.12.0
 
-RegExp → String → Boolean
-Parameters
 
-pattern
-str
-Returns
-
-Boolean
-Determines whether a given string matches a given regular expression.
-
-See also match.
-
+### test
+`RegExp → String → Boolean`
+```
 R.test(/^x/, 'xyz'); //=> true
 R.test(/^y/, 'xyz'); //=> false
-times Added in v0.2.3
+```
 
-(Number → a) → Number → [a]
-Parameters
-
-fn
-The function to invoke. Passed one argument, the current value of n.
- n
-A value between 0 and n - 1. Increments after each function call.
-Returns
-
-Array An array containing the return values of all calls to `fn`.
-Calls an input function n times, returning an array containing the results of those function calls.
-
-fn is passed one argument: The current value of n, which begins at 0 and is gradually incremented to n - 1.
-
-See also repeat.
-
+### times
+`(Number → a) → Number → [a]`
+```
 R.times(R.identity, 5); //=> [0, 1, 2, 3, 4]
-toLower Added in v0.9.0
+```
 
-String → String
-Parameters
-
-str
-The string to lower case.
-Returns
-
-String The lower case version of `str`.
-The lower case version of a string.
-
-See also toUpper.
-
+### toLower
+`String → String`
+```
 R.toLower('XYZ'); //=> 'xyz'
-toPairs Added in v0.4.0
+```
 
-{String: *} → [[String,*]]
-Parameters
-
-obj
-The object to extract from
-Returns
-
-Array An array of key, value arrays from the object's own properties.
-Converts an object into an array of key, value arrays. Only the object's own properties are used. Note that the order of the output array is not guaranteed to be consistent across different JS platforms.
-
-See also fromPairs.
-
+### toPairs
+`{String: *} → [[String,*]]`
+```
 R.toPairs({a: 1, b: 2, c: 3}); //=> [['a', 1], ['b', 2], ['c', 3]]
-toPairsIn Added in v0.4.0
+```
 
-{String: *} → [[String,*]]
-Parameters
-
-obj
-The object to extract from
-Returns
-
-Array An array of key, value arrays from the object's own and prototype properties.
-Converts an object into an array of key, value arrays. The object's own properties and prototype properties are used. Note that the order of the output array is not guaranteed to be consistent across different JS platforms.
-
+### toPairsIn
+`{String: *} → [[String,*]]`
+```
 var F = function() { this.x = 'X'; };
 F.prototype.y = 'Y';
 var f = new F();
 R.toPairsIn(f); //=> [['x','X'], ['y','Y']]
-toString Added in v0.14.0
+```
 
-* → String
-Parameters
-
-val
-Returns
-
-String
-Returns the string representation of the given value. eval'ing the output should result in a value equivalent to the input value. Many of the built-in toString methods do not satisfy this requirement.
-
-If the given value is an [object Object] with a toString method other than Object.prototype.toString, this method is invoked with no arguments to produce the return value. This means user-defined constructor functions can provide a suitable toString method. For example:
-
+### toString
+`* → String`
+```
 function Point(x, y) {
   this.x = x;
   this.y = y;
@@ -3621,49 +3566,17 @@ R.toString('abc'); //=> '"abc"'
 R.toString([1, 2, 3]); //=> '[1, 2, 3]'
 R.toString({foo: 1, bar: 2, baz: 3}); //=> '{"bar": 2, "baz": 3, "foo": 1}'
 R.toString(new Date('2001-02-03T04:05:06Z')); //=> 'new Date("2001-02-03T04:05:06.000Z")'
-toUpper Added in v0.9.0
+```
 
-String → String
-Parameters
-
-str
-The string to upper case.
-Returns
-
-String The upper case version of `str`.
-The upper case version of a string.
-
-See also toLower.
-
+### toUpper
+`String → String`
+```
 R.toUpper('abc'); //=> 'ABC'
-transduce Added in v0.12.0
+```
 
-(c → c) → ((a, b) → a) → a → [b] → a
-Parameters
-
-xf
-The transducer function. Receives a transformer and returns a transformer.
- fn
-The iterator function. Receives two values, the accumulator and the current element from the array. Wrapped as transformer, if necessary, and used to initialize the transducer
- acc
-The initial accumulator value.
- list
-The list to iterate over.
-Returns
-
-* The final, accumulated value.
-Initializes a transducer using supplied iterator function. Returns a single item by iterating through the list, successively calling the transformed iterator function and passing it an accumulator value and the current value from the array, and then passing the result to the next call.
-
-The iterator function receives two values: (acc, value). It will be wrapped as a transformer to initialize the transducer. A transformer can be passed directly in place of an iterator function. In both cases, iteration may be stopped early with the R.reduced function.
-
-A transducer is a function that accepts a transformer and returns a transformer and can be composed directly.
-
-A transformer is an an object that provides a 2-arity reducing iterator function, step, 0-arity initial value function, init, and 1-arity result extraction function, result. The step function is used as the iterator function in reduce. The result function is used to convert the final accumulator into the return type and in most cases is R.identity. The init function can be used to provide an initial accumulator, but is ignored by transduce.
-
-The iteration is performed with R.reduce after initializing the transducer.
-
-See also reduce, reduced, into.
-
+### transduce
+`(c → c) → ((a, b) → a) → a → [b] → a`
+```
 var numbers = [1, 2, 3, 4];
 var transducer = R.compose(R.map(R.add(1)), R.take(2));
 R.transduce(transducer, R.flip(R.append), [], numbers); //=> [2, 3]
@@ -3671,87 +3584,45 @@ R.transduce(transducer, R.flip(R.append), [], numbers); //=> [2, 3]
 var isOdd = (x) => x % 2 === 1;
 var firstOddTransducer = R.compose(R.filter(isOdd), R.take(1));
 R.transduce(firstOddTransducer, R.flip(R.append), [], R.range(0, 100)); //=> [1]
-transpose Added in v0.19.0
+```
 
-[[a]] → [[a]]
-Parameters
-
-list
-A 2D list
-Returns
-
-Array A 2D list
-Transposes the rows and columns of a 2D list. When passed a list of n lists of length x, returns a list of x lists of length n.
-
+### transpose
+`[[a]] → [[a]]`
+```
 R.transpose([[1, 'a'], [2, 'b'], [3, 'c']]) //=> [[1, 2, 3], ['a', 'b', 'c']]
 R.transpose([[1, 2, 3], ['a', 'b', 'c']]) //=> [[1, 'a'], [2, 'b'], [3, 'c']]
 
 // If some of the rows are shorter than the following rows, their elements are skipped:
 R.transpose([[10, 11], [20], [], [30, 31, 32]]) //=> [[10, 20, 30], [11, 31], [32]]
-traverse Added in v0.19.0
+```
 
-(Applicative f, Traversable t) => (a → f a) → (a → f b) → t a → f (t b)
-Parameters
-
-of
-f
-traversable
-Returns
-
-*
-Maps an Applicative-returning function over a Traversable, then uses sequence to transform the resulting Traversable of Applicative into an Applicative of Traversable.
-
-Dispatches to the traverse method of the third argument, if present.
-
-See also sequence.
-
+### traverse
+`(Applicative f, Traversable t) => (a → f a) → (a → f b) → t a → f (t b)`
+```
 // Returns `Nothing` if the given divisor is `0`
 safeDiv = n => d => d === 0 ? Nothing() : Just(n / d)
 
 R.traverse(Maybe.of, safeDiv(10), [2, 4, 5]); //=> Just([5, 2.5, 2])
 R.traverse(Maybe.of, safeDiv(10), [2, 0, 5]); //=> Nothing
-trim Added in v0.6.0
+```
 
-String → String
-Parameters
-
-str
-The string to trim.
-Returns
-
-String Trimmed version of `str`.
-Removes (strips) whitespace from both ends of the string.
-
+### trim
+`String → String`
+```
 R.trim('   xyz  '); //=> 'xyz'
 R.map(R.trim, R.split(',', 'x, y, z')); //=> ['x', 'y', 'z']
-tryCatch Added in v0.20.0
+```
 
-(…x → a) → ((e, …x) → a) → (…x → a)
-Parameters
-
-tryer
-The function that may throw.
- catcher
-The function that will be evaluated if tryer throws.
-Returns
-
-function A new function that will catch exceptions and send then to the catcher.
-tryCatch takes two functions, a tryer and a catcher. The returned function evaluates the tryer; if it does not throw, it simply returns the result. If the tryer does throw, the returned function evaluates the catcher function and returns its result. Note that for effective composition with this function, both the tryer and catcher functions must return the same type of results.
-
+### tryCatch
+`(…x → a) → ((e, …x) → a) → (…x → a)`
+```
 R.tryCatch(R.prop('x'), R.F)({x: true}); //=> true
 R.tryCatch(R.prop('x'), R.F)(null);      //=> false
-type Added in v0.8.0
+```
 
-(* → {*}) → String
-Parameters
-
-val
-The value to test
-Returns
-
-String
-Gives a single-word string description of the (native) type of a value, returning such answers as 'Object', 'Number', 'Array', or 'Null'. Does not attempt to distinguish user Object types any further, reporting them all as 'Object'.
-
+### type
+`(* → {*}) → String`
+```
 R.type({}); //=> "Object"
 R.type(1); //=> "Number"
 R.type(false); //=> "Boolean"
@@ -3761,39 +3632,17 @@ R.type([]); //=> "Array"
 R.type(/[A-z]/); //=> "RegExp"
 R.type(() => {}); //=> "Function"
 R.type(undefined); //=> "Undefined"
-unapply Added in v0.8.0
+```
 
-([*…] → a) → (*… → a)
-Parameters
-
-fn
-Returns
-
-function
-Takes a function fn, which takes a single array argument, and returns a function which:
-
-takes any number of positional arguments;
-passes these arguments to fn as an array; and
-returns the result.
-In other words, R.unapply derives a variadic function from a function which takes an array. R.unapply is the inverse of R.apply.
-
-See also apply.
-
+### unapply
+`([*…] → a) → (*… → a)`
+```
 R.unapply(JSON.stringify)(1, 2, 3); //=> '[1,2,3]'
-unary Added in v0.2.0
+```
 
-(* → b) → (a → b)
-Parameters
-
-fn
-The function to wrap.
-Returns
-
-function A new function wrapping `fn`. The new function is guaranteed to be of arity 1.
-Wraps a function of any arity (including nullary) in a function that accepts exactly 1 parameter. Any extraneous parameters will not be passed to the supplied function.
-
-See also binary, nAry.
-
+### unary
+`(* → b) → (a → b)`
+```
 var takesTwoArgs = function(a, b) {
   return [a, b];
 };
@@ -3804,300 +3653,127 @@ var takesOneArg = R.unary(takesTwoArgs);
 takesOneArg.length; //=> 1
 // Only 1 argument is passed to the wrapped function
 takesOneArg(1, 2); //=> [1, undefined]
-uncurryN Added in v0.14.0
+```
 
-Number → (a → b) → (a → c)
-Parameters
-
-length
-The arity for the returned function.
- fn
-The function to uncurry.
-Returns
-
-function A new function.
-Returns a function of arity n from a (manually) curried function.
-
-See also curry.
-
+### uncurryN
+`Number → (a → b) → (a → c)`
+```
 var addFour = a => b => c => d => a + b + c + d;
 
 var uncurriedAddFour = R.uncurryN(4, addFour);
 uncurriedAddFour(1, 2, 3, 4); //=> 10
-unfold Added in v0.10.0
+```
 
-(a → [b]) → * → [b]
-Parameters
-
-fn
-The iterator function. receives one argument, seed, and returns either false to quit iteration or an array of length two to proceed. The element at index 0 of this array will be added to the resulting array, and the element at index 1 will be passed to the next call to fn.
- seed
-The seed value.
-Returns
-
-Array The final list.
-Builds a list from a seed value. Accepts an iterator function, which returns either false to stop iteration or an array of length 2 containing the value to add to the resulting list and the seed to be used in the next call to the iterator function.
-
-The iterator function receives one argument: (seed).
-
+### unfold
+`(a → [b]) → * → [b]`
+```
 var f = n => n > 50 ? false : [-n, n + 10];
 R.unfold(f, 10); //=> [-10, -20, -30, -40, -50]
-union Added in v0.1.0
+```
 
-[*] → [*] → [*]
-Parameters
-
-as
-The first list.
- bs
-The second list.
-Returns
-
-Array The first and second lists concatenated, with duplicates removed.
-Combines two lists into a set (i.e. no duplicates) composed of the elements of each list.
-
+### union
+`[*] → [*] → [*]`
+```
 R.union([1, 2, 3], [2, 3, 4]); //=> [1, 2, 3, 4]
-unionWith Added in v0.1.0
+```
 
-((a, a) → Boolean) → [*] → [*] → [*]
-Parameters
-
-pred
-A predicate used to test whether two items are equal.
- list1
-The first list.
- list2
-The second list.
-Returns
-
-Array The first and second lists concatenated, with duplicates removed.
-Combines two lists into a set (i.e. no duplicates) composed of the elements of each list. Duplication is determined according to the value returned by applying the supplied predicate to two list elements.
-
-See also union.
-
+### unionWith
+`((a, a) → Boolean) → [*] → [*] → [*]`
+```
 var l1 = [{a: 1}, {a: 2}];
 var l2 = [{a: 1}, {a: 4}];
 R.unionWith(R.eqBy(R.prop('a')), l1, l2); //=> [{a: 1}, {a: 2}, {a: 4}]
-uniq Added in v0.1.0
+```
 
-[a] → [a]
-Parameters
-
-list
-The array to consider.
-Returns
-
-Array The list of unique items.
-Returns a new list containing only one copy of each element in the original list. R.equals is used to determine equality.
-
+### uniq
+`[a] → [a]`
+```
 R.uniq([1, 1, 2, 1]); //=> [1, 2]
 R.uniq([1, '1']);     //=> [1, '1']
 R.uniq([[42], [42]]); //=> [[42]]
-uniqBy Added in v0.16.0
+```
 
-(a → b) → [a] → [a]
-Parameters
-
-fn
-A function used to produce a value to use during comparisons.
- list
-The array to consider.
-Returns
-
-Array The list of unique items.
-Returns a new list containing only one copy of each element in the original list, based upon the value returned by applying the supplied function to each list element. Prefers the first item if the supplied function produces the same value on two items. R.equals is used for comparison.
-
+### uniqBy
+`(a → b) → [a] → [a]`
+```
 R.uniqBy(Math.abs, [-1, -5, 2, 10, 1, 2]); //=> [-1, -5, 2, 10]
-uniqWith Added in v0.2.0
+```
 
-((a, a) → Boolean) → [a] → [a]
-Parameters
-
-pred
-A predicate used to test whether two items are equal.
- list
-The array to consider.
-Returns
-
-Array The list of unique items.
-Returns a new list containing only one copy of each element in the original list, based upon the value returned by applying the supplied predicate to two list elements. Prefers the first item if two items compare equal based on the predicate.
-
+### uniqWith
+`((a, a) → Boolean) → [a] → [a]`
+```
 var strEq = R.eqBy(String);
 R.uniqWith(strEq)([1, '1', 2, 1]); //=> [1, 2]
 R.uniqWith(strEq)([{}, {}]);       //=> [{}]
 R.uniqWith(strEq)([1, '1', 1]);    //=> [1]
 R.uniqWith(strEq)(['1', 1, 1]);    //=> ['1']
-unless Added in v0.18.0
+```
 
-(a → Boolean) → (a → a) → a → a
-Parameters
-
-pred
-A predicate function
- whenFalseFn
-A function to invoke when the pred evaluates to a falsy value.
- x
-An object to test with the pred function and pass to whenFalseFn if necessary.
-Returns
-
-* Either `x` or the result of applying `x` to `whenFalseFn`.
-Tests the final argument by passing it to the given predicate function. If the predicate is not satisfied, the function will return the result of calling the whenFalseFn function with the same argument. If the predicate is satisfied, the argument is returned as is.
-
-See also ifElse, when.
-
+### unless
+`(a → Boolean) → (a → a) → a → a`
+```
 let safeInc = R.unless(R.isNil, R.inc);
 safeInc(null); //=> null
 safeInc(1); //=> 2
-unnest Added in v0.3.0
+```
 
-Chain c => c (c a) → c a
-Parameters
-
-list
-Returns
-
-*
-Shorthand for R.chain(R.identity), which removes one level of nesting from any Chain.
-
-See also flatten, chain.
-
+### unnest
+`Chain c => c (c a) → c a`
+```
 R.unnest([1, [2], [[3]]]); //=> [1, 2, [3]]
 R.unnest([[1, 2], [3, 4], [5, 6]]); //=> [1, 2, 3, 4, 5, 6]
-until Added in v0.20.0
+```
 
-(a → Boolean) → (a → a) → a → a
-Parameters
-
-pred
-A predicate function
- fn
-The iterator function
- init
-Initial value
-Returns
-
-* Final value that satisfies predicate
-Takes a predicate, a transformation function, and an initial value, and returns a value of the same type as the initial value. It does so by applying the transformation until the predicate is satisfied, at which point it returns the satisfactory value.
-
+### until
+`(a → Boolean) → (a → a) → a → a`
+```
 R.until(R.gt(R.__, 100), R.multiply(2))(1) // => 128
-
+```
 
 ### update
-
-Number → a → [a] → [a]
-Parameters
-
-idx
-The index to update.
- x
-The value to exist at the given index of the returned array.
- list
-The source array-like object to be updated.
-Returns
-
-Array A copy of `list` with the value at index `idx` replaced with `x`.
-Returns a new copy of the array with the element at the provided index replaced with the given value.
-
-See also adjust.
-
+`Number → a → [a] → [a]`
+```
 R.update(1, 11, [0, 1, 2]);     //=> [0, 11, 2]
 R.update(1)(11)([0, 1, 2]);     //=> [0, 11, 2]
-
+```
 
 ### useWith 
-((x1, x2, …) → z) → [(a → x1), (b → x2), …] → (a → b → … → z)
-Parameters
-
-fn
-The function to wrap.
- transformers
-A list of transformer functions
-Returns
-
-function The wrapped function.
-Accepts a function fn and a list of transformer functions and returns a new curried function. When the new function is invoked, it calls the function fn with parameters consisting of the result of calling each supplied handler on successive arguments to the new function.
-
-If more arguments are passed to the returned function than transformer functions, those arguments are passed directly to fn as additional parameters. If you expect additional arguments that don't need to be transformed, although you can ignore them, it's best to pass an identity function so that the new function reports the correct arity.
-
-See also converge.
-
+`((x1, x2, …) → z) → [(a → x1), (b → x2), …] → (a → b → … → z)`
+```
 R.useWith(Math.pow, [R.identity, R.identity])(3, 4); //=> 81
 R.useWith(Math.pow, [R.identity, R.identity])(3)(4); //=> 81
 R.useWith(Math.pow, [R.dec, R.inc])(3, 4); //=> 32
 R.useWith(Math.pow, [R.dec, R.inc])(3)(4); //=> 32
-values Added in v0.1.0
+```
 
-{k: v} → [v]
-Parameters
-
-obj
-The object to extract values from
-Returns
-
-Array An array of the values of the object's own properties.
-Returns a list of all the enumerable own properties of the supplied object. Note that the order of the output array is not guaranteed across different JS platforms.
-
-See also valuesIn, keys.
-
+### values
+`{k: v} → [v]`
+```
 R.values({a: 1, b: 2, c: 3}); //=> [1, 2, 3]
-
+```
 
 ### valuesIn
-
-{k: v} → [v]
-Parameters
-
-obj
-The object to extract values from
-Returns
-
-Array An array of the values of the object's own and prototype properties.
-Returns a list of all the properties, including prototype properties, of the supplied object. Note that the order of the output array is not guaranteed to be consistent across different JS platforms.
-
-See also values, keysIn.
-
+`{k: v} → [v]`
+```
 var F = function() { this.x = 'X'; };
 F.prototype.y = 'Y';
 var f = new F();
 R.valuesIn(f); //=> ['X', 'Y']
+```
 
 ### view
-
-Lens s a → s → a
-Lens s a = Functor f => (a → f a) → s → f s
-Parameters
-
-lens
-x
-Returns
-
-*
-Returns a "view" of the given data structure, determined by the given lens. The lens's focus determines which portion of the data structure is visible.
-
-See also prop, lensIndex, lensProp.
-
+`Lens s a → s → a`
+`Lens s a = Functor f => (a → f a) → s → f s`
+```
 var xLens = R.lensProp('x');
 
 R.view(xLens, {x: 1, y: 2});  //=> 1
 R.view(xLens, {x: 4, y: 2});  //=> 4
+```
 
 ### when
-(a → Boolean) → (a → a) → a → a
-Parameters
-
-pred
-A predicate function
- whenTrueFn
-A function to invoke when the condition evaluates to a truthy value.
- x
-An object to test with the pred function and pass to whenTrueFn if necessary.
-Returns
-
-* Either `x` or the result of applying `x` to `whenTrueFn`.
-Tests the final argument by passing it to the given predicate function. If the predicate is satisfied, the function will return the result of calling the whenTrueFn function with the same argument. If the predicate is not satisfied, the argument is returned as is.
-
-See also ifElse, unless.
-
+`(a → Boolean) → (a → a) → a → a`
+```
 // truncate :: String -> String
 var truncate = R.when(
   R.propSatisfies(R.gt(R.__, 10), 'length'),
@@ -4105,23 +3781,10 @@ var truncate = R.when(
 );
 truncate('12345');         //=> '12345'
 truncate('0123456789ABC'); //=> '0123456789…'
-
+```
 
 ### where
-
 ```{String: (* → Boolean)} → {String: *} → Boolean```
-Parameters
-
-spec
-testObj
-Returns
-
-Boolean
-Takes a spec object and a test object; returns true if the test satisfies the spec. Each of the spec's own properties must be a predicate function. Each predicate is applied to the value of the corresponding property of the test object. where returns true if all the predicates return true, false otherwise.
-
-where is well suited to declaratively expressing constraints for other functions such as filter and find.
-
-See also propSatisfies, whereEq.
 ```
 // pred :: Object -> Boolean
 var pred = R.where({
@@ -4139,23 +3802,9 @@ pred({a: 'foo', b: 'xxx', x: 11, y: 20}); //=> false
 ```
 
 ### whereEq
-
 ```js
 {String: *} → {String: *} → Boolean
 ```
-Parameters
-
-spec
-testObj
-Returns
-
-Boolean
-Takes a spec object and a test object; returns true if the test satisfies the spec, false otherwise. An object satisfies the spec if, for each of the spec's own properties, accessing that property of the object gives the same value (in R.equals terms) as accessing that property of the spec.
-
-whereEq is a specialization of where.
-
-See also propEq, where.
-
 ```js
 // pred :: Object -> Boolean
 var pred = R.whereEq({a: 1, b: 2});
@@ -4165,84 +3814,35 @@ pred({a: 1, b: 2});        //=> true
 pred({a: 1, b: 2, c: 3});  //=> true
 pred({a: 1, b: 1});        //=> false
 ```
+
 ### without
-
-[a] → [a] → [a]
-Parameters
-
-list1
-The values to be removed from list2.
- list2
-The array to remove values from.
-Returns
-
-Array The new array without values in `list1`.
-Returns a new list without values in the first argument. R.equals is used to determine equality.
-
-Acts as a transducer if a transformer is given in list position.
-
-See also transduce, difference.
-
+`[a] → [a] → [a]`
+```
 R.without([1, 2], [1, 2, 1, 3, 4]); //=> [3, 4]
+```
 
 ### xprod
-
-[a] → [b] → [[a,b]]
-Parameters
-
-as
-The first list.
- bs
-The second list.
-Returns
-
-Array The list made by combining each possible pair from `as` and `bs` into pairs (`[a, b]`).
-Creates a new list out of the two supplied by creating each possible pair from the lists.
-
+`[a] → [b] → [[a,b]]`
+```
 R.xprod([1, 2], ['a', 'b']); //=> [[1, 'a'], [1, 'b'], [2, 'a'], [2, 'b']]
+```
 
 ### zip
-[a] → [b] → [[a,b]]
-Parameters
-
-list1
-The first array to consider.
- list2
-The second array to consider.
-Returns
-
-Array The list made by pairing up same-indexed elements of `list1` and `list2`.
-Creates a new list out of the two supplied by pairing up equally-positioned items from both lists. The returned list is truncated to the length of the shorter of the two input lists. Note: zip is equivalent to zipWith(function(a, b) { return [a, b] }).
-
+`[a] → [b] → [[a,b]]`
+```
 R.zip([1, 2, 3], ['a', 'b', 'c']); //=> [[1, 'a'], [2, 'b'], [3, 'c']]
+```
 
 ### zipObj
 ```js
 [String] → [*] → {String: *}
 ```
-Parameters
-keys
-The array that will be properties on the output object.
- values
-The list of values on the output object.
-Returns
-
-Object The object made by pairing up same-indexed elements of `keys` and `values`.
-Creates a new object out of a list of keys and a list of values. Key/value pairing is truncated to the length of the shorter of the two lists. Note: zipObj is equivalent to pipe(zip, fromPairs).
 ```js
 R.zipObj(['a', 'b', 'c'], [1, 2, 3]); //=> {a: 1, b: 2, c: 3}
 ```
+
 ### zipWith
-
-((a, b) → c) → [a] → [b] → [c]
-Parameters
-fn - The function used to combine the two elements into one value.
-list1 - The first array to consider.
-list2 - The second array to consider.
-
-Returns
-Array The list made by combining same-indexed elements of `list1` and `list2` using `fn`.
-Creates a new list out of the two supplied by applying the function to each equally-positioned pair in the lists. The returned list is truncated to the length of the shorter of the two input lists.
+`((a, b) → c) → [a] → [b] → [c]`
 ```js
 var f = (x, y) => {
   // ...
