@@ -559,154 +559,70 @@ R.dropRepeats([1, 1, 1, 2, 3, 4, 4, 2, 2]); //=> [1, 2, 3, 4, 2]
 ```
 
 ### dropRepeatsWith
-
-((a, a) → Boolean) → [a] → [a]
-Parameters
-
-pred
-A predicate used to test whether two items are equal.
- list
-The array to consider.
-Returns
-
-Array `list` without repeating elements.
-Returns a new list without any consecutively repeating elements. Equality is determined by applying the supplied predicate to each pair of consecutive elements. The first element in a series of equal elements will be preserved.
-
-Acts as a transducer if a transformer is given in list position.
-
-See also transduce.
-
+`((a, a) → Boolean) → [a] → [a]`
+```
 var l = [1, -1, 1, 3, 4, -4, -4, -5, 5, 3, 3];
 R.dropRepeatsWith(R.eqBy(Math.abs), l); //=> [1, 3, 4, -5, 3]
-dropWhile Added in v0.9.0
+```
 
-(a → Boolean) → [a] → [a]
-(a → Boolean) → String → String
-Parameters
-
-fn
-The function called per iteration.
- xs
-The collection to iterate over.
-Returns
-
-Array A new array.
-Returns a new list excluding the leading elements of a given list which satisfy the supplied predicate function. It passes each value to the supplied predicate function, skipping elements while the predicate function returns true. The predicate function is applied to one argument: (value).
-
-Dispatches to the dropWhile method of the second argument, if present.
-
-Acts as a transducer if a transformer is given in list position.
-
-See also takeWhile, transduce, addIndex.
-
+### dropWhile
+`(a → Boolean) → [a] → [a]`
+`(a → Boolean) → String → String`
+```
 var lteTwo = x => x <= 2;
 
 R.dropWhile(lteTwo, [1, 2, 3, 4, 3, 2, 1]); //=> [3, 4, 3, 2, 1]
 
 R.dropWhile(x => x !== 'd' , 'Ramda'); //=> 'da'
-either Added in v0.12.0
+```
 
-(*… → Boolean) → (*… → Boolean) → (*… → Boolean)
-Parameters
-
-f
-a predicate
- g
-another predicate
-Returns
-
-function a function that applies its arguments to `f` and `g` and `||`s their outputs together.
-A function wrapping calls to the two functions in an || operation, returning the result of the first function if it is truth-y and the result of the second function otherwise. Note that this is short-circuited, meaning that the second function will not be invoked if the first returns a truth-y value.
-
-In addition to functions, R.either also accepts any fantasy-land compatible applicative functor.
-
-See also or.
-
+### either
+`(*… → Boolean) → (*… → Boolean) → (*… → Boolean)`
+```
 var gt10 = x => x > 10;
 var even = x => x % 2 === 0;
 var f = R.either(gt10, even);
 f(101); //=> true
 f(8); //=> true
-empty Added in v0.3.0
+```
 
-a → a
-Parameters
-
-x
-Returns
-
-*
-Returns the empty value of its argument's type. Ramda defines the empty value of Array ([]), Object ({}), String (''), and Arguments. Other types are supported if they define <Type>.empty, <Type>.prototype.empty or implement the FantasyLand Monoid spec.
-
-Dispatches to the empty method of the first argument, if present.
-
+### empty
+`a → a`
+```
 R.empty(Just(42));      //=> Nothing()
 R.empty([1, 2, 3]);     //=> []
 R.empty('unicorns');    //=> ''
 R.empty({x: 1, y: 2});  //=> {}
-endsWith Added in v0.24.0
+```
 
-[a] → Boolean
-String → Boolean
-Parameters
-
-suffix
-list
-Returns
-
-Boolean
-Checks if a list ends with the provided values
-
+### endsWith
+`[a] → Boolean`
+`String → Boolean`
+```
 R.endsWith('c', 'abc')                //=> true
 R.endsWith('b', 'abc')                //=> false
 R.endsWith(['c'], ['a', 'b', 'c'])    //=> true
 R.endsWith(['b'], ['a', 'b', 'c'])    //=> false
-eqBy Added in v0.18.0
+```
 
-(a → b) → a → a → Boolean
-Parameters
-
-f
-x
-y
-Returns
-
-Boolean
-Takes a function and two values in its domain and returns true if the values map to the same value in the codomain; false otherwise.
-
+### eqBy
+`(a → b) → a → a → Boolean`
+```
 R.eqBy(Math.abs, 5, -5); //=> true
-eqProps Added in v0.1.0
+```
 
-k → {k: v} → {k: v} → Boolean
-Parameters
-
-prop
-The name of the property to compare
- obj1
-obj2
-Returns
-
-Boolean
-Reports whether two objects have the same value, in R.equals terms, for the specified property. Useful as a curried predicate.
-
+### eqProps
+`k → {k: v} → {k: v} → Boolean`
+```
 var o1 = { a: 1, b: 2, c: 3, d: 4 };
 var o2 = { a: 10, b: 20, c: 3, d: 40 };
 R.eqProps('a', o1, o2); //=> false
 R.eqProps('c', o1, o2); //=> true
-equals Added in v0.15.0
+```
 
-a → b → Boolean
-Parameters
-
-a
-b
-Returns
-
-Boolean
-Returns true if its arguments are equivalent, false otherwise. Handles cyclical data structures.
-
-Dispatches symmetrically to the equals methods of both arguments, if present.
-
+### equals
+`a → b → Boolean`
+```
 R.equals(1, 1); //=> true
 R.equals(1, '1'); //=> false
 R.equals([1, 2, 3], [1, 2, 3]); //=> true
@@ -714,22 +630,11 @@ R.equals([1, 2, 3], [1, 2, 3]); //=> true
 var a = {}; a.v = a;
 var b = {}; b.v = b;
 R.equals(a, b); //=> true
-evolve Added in v0.9.0
+```
 
-{k: (v → v)} → {k: v} → {k: v}
-Parameters
-
-transformations
-The object specifying transformation functions to apply to the object.
- object
-The object to be transformed.
-Returns
-
-Object The transformed object.
-Creates a new object by recursively evolving a shallow copy of object, according to the transformation functions. All non-primitive properties are copied by reference.
-
-A transformation function will not be invoked if its corresponding key does not exist in the evolved object.
-
+### evolve
+`{k: (v → v)} → {k: v} → {k: v}`
+```
 var tomato  = {firstName: '  Tomato ', data: {elapsed: 100, remaining: 1400}, id:123};
 var transformations = {
   firstName: R.trim,
@@ -737,245 +642,101 @@ var transformations = {
   data: {elapsed: R.add(1), remaining: R.add(-1)}
 };
 R.evolve(transformations, tomato); //=> {firstName: 'Tomato', data: {elapsed: 101, remaining: 1399}, id:123}
-F Added in v0.9.0
+```
 
-* → Boolean
-Parameters
-
-Returns
-
-Boolean
-A function that always returns false. Any passed in parameters are ignored.
-
-See also always, T.
-
+### F
+`* → Boolean`
+```
 R.F(); //=> false
-filter Added in v0.1.0
+```
 
-Filterable f => (a → Boolean) → f a → f a
-Parameters
-
-pred
-filterable
-Returns
-
-Array Filterable
-Takes a predicate and a Filterable, and returns a new filterable of the same type containing the members of the given filterable which satisfy the given predicate. Filterable objects include plain objects or any object that has a filter method such as Array.
-
-Dispatches to the filter method of the second argument, if present.
-
-Acts as a transducer if a transformer is given in list position.
-
-See also reject, transduce, addIndex.
-
+### filter
+`f => (a → Boolean) → f a → f a`
+```
 var isEven = n => n % 2 === 0;
 
 R.filter(isEven, [1, 2, 3, 4]); //=> [2, 4]
 
 R.filter(isEven, {a: 1, b: 2, c: 3, d: 4}); //=> {b: 2, d: 4}
-find Added in v0.1.0
+```
 
-(a → Boolean) → [a] → a | undefined
-Parameters
-
-fn
-The predicate function used to determine if the element is the desired one.
- list
-The array to consider.
-Returns
-
-Object The element found, or `undefined`.
-Returns the first element of the list which matches the predicate, or undefined if no element matches.
-
-Dispatches to the find method of the second argument, if present.
-
-Acts as a transducer if a transformer is given in list position.
-
-See also transduce.
-
+### find
+`(a → Boolean) → [a] → a | undefined`
+```
 var xs = [{a: 1}, {a: 2}, {a: 3}];
 R.find(R.propEq('a', 2))(xs); //=> {a: 2}
 R.find(R.propEq('a', 4))(xs); //=> undefined
-findIndex Added in v0.1.1
+```
 
-(a → Boolean) → [a] → Number
-Parameters
-
-fn
-The predicate function used to determine if the element is the desired one.
- list
-The array to consider.
-Returns
-
-Number The index of the element found, or `-1`.
-Returns the index of the first element of the list which matches the predicate, or -1 if no element matches.
-
-Acts as a transducer if a transformer is given in list position.
-
-See also transduce.
-
+### findIndex
+`(a → Boolean) → [a] → Number`
+```
 var xs = [{a: 1}, {a: 2}, {a: 3}];
 R.findIndex(R.propEq('a', 2))(xs); //=> 1
 R.findIndex(R.propEq('a', 4))(xs); //=> -1
-findLast Added in v0.1.1
+```
 
-(a → Boolean) → [a] → a | undefined
-Parameters
-
-fn
-The predicate function used to determine if the element is the desired one.
- list
-The array to consider.
-Returns
-
-Object The element found, or `undefined`.
-Returns the last element of the list which matches the predicate, or undefined if no element matches.
-
-Acts as a transducer if a transformer is given in list position.
-
-See also transduce.
-
+### findLast
+`(a → Boolean) → [a] → a | undefined`
+```
 var xs = [{a: 1, b: 0}, {a:1, b: 1}];
 R.findLast(R.propEq('a', 1))(xs); //=> {a: 1, b: 1}
 R.findLast(R.propEq('a', 4))(xs); //=> undefined
-findLastIndex Added in v0.1.1
+```
 
-(a → Boolean) → [a] → Number
-Parameters
-
-fn
-The predicate function used to determine if the element is the desired one.
- list
-The array to consider.
-Returns
-
-Number The index of the element found, or `-1`.
-Returns the index of the last element of the list which matches the predicate, or -1 if no element matches.
-
-Acts as a transducer if a transformer is given in list position.
-
-See also transduce.
-
+### findLastIndex
+`(a → Boolean) → [a] → Number`
+```
 var xs = [{a: 1, b: 0}, {a:1, b: 1}];
 R.findLastIndex(R.propEq('a', 1))(xs); //=> 1
 R.findLastIndex(R.propEq('a', 4))(xs); //=> -1
-flatten Added in v0.1.0
+```
 
-[a] → [b]
-Parameters
-
-list
-The array to consider.
-Returns
-
-Array The flattened list.
-Returns a new list by pulling every item out of it (and all its sub-arrays) and putting them in a new array, depth-first.
-
-See also unnest.
-
+### flatten
+`[a] → [b]`
+```
 R.flatten([1, 2, [3, 4], 5, [6, [7, 8, [9, [10, 11], 12]]]]);
 //=> [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-flip Added in v0.1.0
+```
 
-((a, b, c, …) → z) → (b → a → c → … → z)
-Parameters
-
-fn
-The function to invoke with its first two parameters reversed.
-Returns
-
-* The result of invoking `fn` with its first two parameters' order reversed.
-Returns a new function much like the supplied one, except that the first two arguments' order is reversed.
-
+### flip
+`((a, b, c, …) → z) → (b → a → c → … → z)`
+```
 var mergeThree = (a, b, c) => [].concat(a, b, c);
 
 mergeThree(1, 2, 3); //=> [1, 2, 3]
 
 R.flip(mergeThree)(1, 2, 3); //=> [2, 1, 3]
-forEach Added in v0.1.1
+```
 
-(a → *) → [a] → [a]
-Parameters
-
-fn
-The function to invoke. Receives one argument, value.
- list
-The list to iterate over.
-Returns
-
-Array The original list.
-Iterate over an input list, calling a provided function fn for each element in the list.
-
-fn receives one argument: (value).
-
-Note: R.forEach does not skip deleted or unassigned indices (sparse arrays), unlike the native Array.prototype.forEach method. For more details on this behavior, see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach#Description
-
-Also note that, unlike Array.prototype.forEach, Ramda's forEach returns the original array. In some libraries this function is named each.
-
-Dispatches to the forEach method of the second argument, if present.
-
-See also addIndex.
-
+### forEach
+`(a → *) → [a] → [a]`
+```
 var printXPlusFive = x => console.log(x + 5);
 R.forEach(printXPlusFive, [1, 2, 3]); //=> [1, 2, 3]
 // logs 6
 // logs 7
 // logs 8
-forEachObjIndexed Added in v0.23.0
+```
 
-((a, String, StrMap a) → Any) → StrMap a → StrMap a
-Parameters
-
-fn
-The function to invoke. Receives three argument, value, key, obj.
- obj
-The object to iterate over.
-Returns
-
-Object The original object.
-Iterate over an input object, calling a provided function fn for each key and value in the object.
-
-fn receives three argument: (value, key, obj).
-
+### forEachObjIndexed
+`((a, String, StrMap a) → Any) → StrMap a → StrMap a`
+```
 var printKeyConcatValue = (value, key) => console.log(key + ':' + value);
 R.forEachObjIndexed(printKeyConcatValue, {x: 1, y: 2}); //=> {x: 1, y: 2}
 // logs x:1
 // logs y:2
-fromPairs Added in v0.3.0
+```
 
-[[k,v]] → {k: v}
-Parameters
-
-pairs
-An array of two-element arrays that will be the keys and values of the output object.
-Returns
-
-Object The object made by pairing up `keys` and `values`.
-Creates a new object from a list key-value pairs. If a key appears in multiple pairs, the rightmost pair is included in the object.
-
-See also toPairs, pair.
-
+### fromPairs
+`[[k,v]] → {k: v}`
+```
 R.fromPairs([['a', 1], ['b', 2], ['c', 3]]); //=> {a: 1, b: 2, c: 3}
-groupBy Added in v0.1.0
+```
 
-(a → String) → [a] → {String: [a]}
-Parameters
-
-fn
-Function :: a -> String
- list
-The array to group
-Returns
-
-Object An object with the output of `fn` for keys, mapped to arrays of elements that produced that key when passed to `fn`.
-Splits a list into sub-lists stored in an object, based on the result of calling a String-returning function on each element, and grouping the results according to values returned.
-
-Dispatches to the groupBy method of the second argument, if present.
-
-Acts as a transducer if a transformer is given in list position.
-
-See also transduce.
-
+### groupBy
+`(a → String) → [a] → {String: [a]}`
+```
 var byGrade = R.groupBy(function(student) {
   var score = student.score;
   return score < 65 ? 'F' :
@@ -994,20 +755,11 @@ byGrade(students);
 //   // ...,
 //   'F': [{name: 'Eddy', score: 58}]
 // }
-groupWith Added in v0.21.0
+```
 
-((a, a) → Boolean) → [a] → [[a]]
-Parameters
-
-fn
-Function for determining whether two given (adjacent) elements should be in the same group
- list
-The array to group. Also accepts a string, which will be treated as a list of characters.
-Returns
-
-List A list that contains sublists of elements, whose concatenations are equal to the original list.
-Takes a list and returns a list of lists where each sublist's elements are all satisfied pairwise comparison according to the provided function. Only adjacent elements are passed to the comparison function.
-
+### groupWith
+`((a, a) → Boolean) → [a] → [[a]]`
+```
 R.groupWith(R.equals, [0, 1, 1, 2, 3, 5, 8, 13, 21])
 //=> [[0], [1, 1], [2], [3], [5], [8], [13], [21]]
 
@@ -1019,6 +771,8 @@ R.groupWith((a, b) => a % 2 === b % 2, [0, 1, 1, 2, 3, 5, 8, 13, 21])
 
 R.groupWith(R.eqBy(isVowel), 'aestiou')
 //=> ['ae', 'st', 'iou']
+```
+
 gt Added in v0.1.0
 
 Ord a => a → a → Boolean
