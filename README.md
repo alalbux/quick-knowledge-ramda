@@ -1,7 +1,6 @@
 # Quick knowledge Ramda
 
 ## Ramda
-
 ### __ 
 
 A special placeholder value used to specify "gaps" within curried functions, allowing partial application of any combination of arguments, regardless of their positions.
