@@ -23,25 +23,14 @@ var greet = R.replace('{name}', R.__, 'Hello, {name}!');
 greet('Alice'); //=> 'Hello, Alice!'
 ```
 ### add
-
-Number → Number → Number
-Parameters
-
-a
-b
-Returns
-
-Number
-Adds two values.
-
-See also subtract.
-
+`Number → Number → Number`
+```js
 R.add(2, 3);       //=>  5
 R.add(7)(10);      //=> 17
-addIndex Added in v0.15.0
+```
 
-((a … → b) … → [a] → *) → (a …, Int, [a] → b) … → [a] → *)
-Parameters
+### addIndex
+`((a … → b) … → [a] → *) → (a …, Int, [a] → b) … → [a] → *)`
 
 fn
 A list iteration function that does not pass index or list to its callback
@@ -55,7 +44,10 @@ This would turn, for instance, R.map function into one that more closely resembl
 var mapIndexed = R.addIndex(R.map);
 mapIndexed((val, idx) => idx + '-' + val, ['f', 'o', 'o', 'b', 'a', 'r']);
 //=> ['0-f', '1-o', '2-o', '3-b', '4-a', '5-r']
-adjust Added in v0.14.0
+
+
+
+### adjust Added in v0.14.0
 
 (a → a) → Number → [a] → [a]
 Parameters
@@ -75,7 +67,9 @@ See also update.
 
 R.adjust(R.add(10), 1, [1, 2, 3]);     //=> [1, 12, 3]
 R.adjust(R.add(10))(1)([1, 2, 3]);     //=> [1, 12, 3]
-all Added in v0.1.0
+
+
+### all Added in v0.1.0
 
 (a → Boolean) → [a] → Boolean
 Parameters
@@ -98,7 +92,9 @@ See also any, none, transduce.
 var equals3 = R.equals(3);
 R.all(equals3)([3, 3, 3, 3]); //=> true
 R.all(equals3)([3, 3, 1, 3]); //=> false
-allPass Added in v0.9.0
+
+
+### allPass Added in v0.9.0
 
 [(*… → Boolean)] → (*… → Boolean)
 Parameters
@@ -120,7 +116,8 @@ var isQueenOfSpades = R.allPass([isQueen, isSpade]);
 
 isQueenOfSpades({rank: 'Q', suit: '♣︎'}); //=> false
 isQueenOfSpades({rank: 'Q', suit: '♠︎'}); //=> true
-always Added in v0.1.0
+
+### always Added in v0.1.0
 
 a → (* → a)
 Parameters
@@ -136,7 +133,9 @@ This function is known as const, constant, or K (for K combinator) in other lang
 
 var t = R.always('Tee');
 t(); //=> 'Tee'
-and Added in v0.1.0
+
+
+### and Added in v0.1.0
 
 a → b → a | b
 Parameters
@@ -154,7 +153,9 @@ R.and(true, true); //=> true
 R.and(true, false); //=> false
 R.and(false, true); //=> false
 R.and(false, false); //=> false
-any Added in v0.1.0
+
+
+### any Added in v0.1.0
 
 (a → Boolean) → [a] → Boolean
 Parameters
@@ -178,7 +179,9 @@ var lessThan0 = R.flip(R.lt)(0);
 var lessThan2 = R.flip(R.lt)(2);
 R.any(lessThan0)([1, 2]); //=> false
 R.any(lessThan2)([1, 2]); //=> true
-anyPass Added in v0.9.0
+
+
+### anyPass Added in v0.9.0
 
 [(*… → Boolean)] → (*… → Boolean)
 Parameters
@@ -201,7 +204,9 @@ var isBlackCard = R.anyPass([isClub, isSpade]);
 isBlackCard({rank: '10', suit: '♣'}); //=> true
 isBlackCard({rank: 'Q', suit: '♠'}); //=> true
 isBlackCard({rank: 'Q', suit: '♦'}); //=> false
-ap Added in v0.3.0
+
+
+### ap Added in v0.3.0
 
 [a → b] → [a] → [b]
 Apply f => f (a → b) → f a → f b
@@ -223,7 +228,9 @@ R.ap([R.concat('tasty '), R.toUpper], ['pizza', 'salad']); //=> ["tasty pizza", 
 // R.ap can also be used as S combinator
 // when only two functions are passed
 R.ap(R.concat, R.toUpper)('Ramda') //=> 'RamdaRAMDA'
-aperture Added in v0.12.0
+
+
+### aperture Added in v0.12.0
 
 Number → [a] → [[a]]
 Parameters
@@ -263,7 +270,9 @@ See also prepend.
 R.append('tests', ['write', 'more']); //=> ['write', 'more', 'tests']
 R.append('tests', []); //=> ['tests']
 R.append(['tests'], ['write', 'more']); //=> ['write', 'more', ['tests']]
-apply Added in v0.7.0
+
+
+### apply Added in v0.7.0
 
 (*… → a) → [*] → a
 Parameters
@@ -300,7 +309,9 @@ var getMetrics = R.applySpec({
   nested: { mul: R.multiply }
 });
 getMetrics(2, 4); // => { sum: 6, nested: { mul: 8 } }
-applyTo Added in v0.25.0
+
+
+### applyTo Added in v0.25.0
 
 a → (a → b) → b
 Parameters
@@ -319,7 +330,9 @@ This function is also known as the thrush combinator.
 var t42 = R.applyTo(42);
 t42(R.identity); //=> 42
 t42(R.add(1)); //=> 43
-ascend Added in v0.23.0
+
+
+### ascend Added in v0.23.0
 
 Ord b => (a → b) → a → a → Number
 Parameters
@@ -342,7 +355,8 @@ var people = [
   // ...
 ];
 var peopleByYoungestFirst = R.sort(byAge, people);
-assoc Added in v0.8.0
+
+### assoc Added in v0.8.0
 
 String → a → {k: v} → {k: v}
 Parameters
@@ -361,7 +375,8 @@ Makes a shallow clone of an object, setting or overriding the specified property
 See also dissoc.
 
 R.assoc('c', 3, {a: 1, b: 2}); //=> {a: 1, b: 2, c: 3}
-assocPath Added in v0.8.0
+
+### assocPath Added in v0.8.0
 
 [Idx] → a → {a} → {a}
 Idx = String | Int
@@ -384,7 +399,9 @@ R.assocPath(['a', 'b', 'c'], 42, {a: {b: {c: 0}}}); //=> {a: {b: {c: 42}}}
 
 // Any missing or non-object keys in path will be overridden
 R.assocPath(['a', 'b', 'c'], 42, {a: 5}); //=> {a: {b: {c: 42}}}
-binary Added in v0.2.0
+
+
+### binary Added in v0.2.0
 
 (* → c) → (a, b → c)
 Parameters
@@ -408,7 +425,8 @@ var takesTwoArgs = R.binary(takesThreeArgs);
 takesTwoArgs.length; //=> 2
 // Only 2 arguments are passed to the wrapped function
 takesTwoArgs(1, 2, 3); //=> [1, 2, undefined]
-bind Added in v0.6.0
+
+### bind Added in v0.6.0
 
 (* → *) → {*} → (* → *)
 Parameters
@@ -427,7 +445,9 @@ See also partial.
 var log = R.bind(console.log, console);
 R.pipe(R.assoc('a', 2), R.tap(log), R.assoc('a', 3))({a: 1}); //=> {a: 3}
 // logs {a: 2}
-both Added in v0.12.0
+
+
+### both Added in v0.12.0
 
 (*… → Boolean) → (*… → Boolean) → (*… → Boolean)
 Parameters
@@ -450,7 +470,7 @@ var lt20 = R.lt(R.__, 20)
 var f = R.both(gt10, lt20);
 f(15); //=> true
 f(30); //=> false
-call Added in v0.9.0
+### call Added in v0.9.0
 
 (*… → a),*… → a
 Parameters
@@ -478,7 +498,9 @@ var format = R.converge(R.call, [
                         ]);
 
 format({indent: 2, value: 'foo\nbar\nbaz\n'}); //=> '  foo\n  bar\n  baz\n'
-chain Added in v0.3.0
+
+
+### chain Added in v0.3.0
 
 Chain m => (a → m b) → m a → m b
 Parameters
@@ -498,7 +520,8 @@ var duplicate = n => [n, n];
 R.chain(duplicate, [1, 2, 3]); //=> [1, 1, 2, 2, 3, 3]
 
 R.chain(R.append, R.head)([1, 2, 3]); //=> [1, 2, 3, 1]
-clamp Added in v0.20.0
+
+### clamp Added in v0.20.0
 
 Ord a => a → a → a → a
 Parameters
@@ -537,7 +560,8 @@ var objects = [{}, {}, {}];
 var objectsClone = R.clone(objects);
 objects === objectsClone; //=> false
 objects[0] === objectsClone[0]; //=> false
-comparator Added in v0.1.0
+
+### comparator Added in v0.1.0
 
 ((a, b) → Boolean) → ((a, b) → Number)
 Parameters
@@ -554,7 +578,8 @@ var people = [
   // ...
 ];
 var peopleByIncreasingAge = R.sort(byAge, people);
-complement Added in v0.12.0
+
+### complement Added in v0.12.0
 
 (*… → *) → (*… → Boolean)
 Parameters
@@ -574,7 +599,8 @@ isNil(null); //=> true
 isNotNil(null); //=> false
 isNil(7); //=> false
 isNotNil(7); //=> true
-compose Added in v0.1.0
+
+### compose Added in v0.1.0
 
 ((y → z), (x → y), …, (o → p), ((a, b, …, n) → o)) → ((a, b, …, n) → z)
 Parameters
@@ -595,7 +621,8 @@ var yellGreeting = R.compose(R.toUpper, classyGreeting);
 yellGreeting('James', 'Bond'); //=> "THE NAME'S BOND, JAMES BOND"
 
 R.compose(Math.abs, R.add(1), R.multiply(2))(-4) //=> 7
-composeK Added in v0.16.0
+
+### composeK Added in v0.16.0
 
 Chain m => ((y → m z), (x → m y), …, (a → m b)) → (a → m z)
 Parameters
@@ -655,7 +682,8 @@ lookupUser('JOE').then(lookupFollowers)
 var followersForUser = R.composeP(lookupFollowers, lookupUser);
 followersForUser('JOE').then(followers => console.log('Followers:', followers))
 // Followers: ["STEVE","SUZY"]
-concat Added in v0.1.0
+
+### concat Added in v0.1.0
 
 [a] → [a] → [a]
 String → String → String
@@ -677,7 +705,7 @@ Dispatches to the concat method of the first argument, if present. Can also conc
 R.concat('ABC', 'DEF'); // 'ABCDEF'
 R.concat([4, 5, 6], [1, 2, 3]); //=> [4, 5, 6, 1, 2, 3]
 R.concat([], []); //=> []
-cond Added in v0.6.0
+### cond Added in v0.6.0
 
 [[(*… → Boolean),(*… → *)]] → (*… → *)
 Parameters
