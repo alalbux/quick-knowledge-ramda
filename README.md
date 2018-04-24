@@ -773,58 +773,29 @@ R.groupWith(R.eqBy(isVowel), 'aestiou')
 //=> ['ae', 'st', 'iou']
 ```
 
-gt Added in v0.1.0
-
-Ord a => a → a → Boolean
-Parameters
-
-a
-b
-Returns
-
-Boolean
-Returns true if the first argument is greater than the second; false otherwise.
-
-See also lt.
-
+### gt
+`Ord a => a → a → Boolean`
+```
 R.gt(2, 1); //=> true
 R.gt(2, 2); //=> false
 R.gt(2, 3); //=> false
 R.gt('a', 'z'); //=> false
 R.gt('z', 'a'); //=> true
-gte Added in v0.1.0
+```
 
-Ord a => a → a → Boolean
-Parameters
-
-a
-b
-Returns
-
-Boolean
-Returns true if the first argument is greater than or equal to the second; false otherwise.
-
-See also lte.
-
+### gte
+`Ord a => a → a → Boolean`
+```
 R.gte(2, 1); //=> true
 R.gte(2, 2); //=> true
 R.gte(2, 3); //=> false
 R.gte('a', 'z'); //=> false
 R.gte('z', 'a'); //=> true
-has Added in v0.7.0
+```
 
-s → {s: x} → Boolean
-Parameters
-
-prop
-The name of the property to check for.
- obj
-The object to query.
-Returns
-
-Boolean Whether the property exists.
-Returns whether or not an object has an own property with the specified name
-
+### has 
+`s → {s: x} → Boolean`
+```
 var hasName = R.has('name');
 hasName({name: 'alice'});   //=> true
 hasName({name: 'bob'});     //=> true
@@ -835,20 +806,11 @@ var pointHas = R.has(R.__, point);
 pointHas('x');  //=> true
 pointHas('y');  //=> true
 pointHas('z');  //=> false
-hasIn Added in v0.7.0
+```
 
-s → {s: x} → Boolean
-Parameters
-
-prop
-The name of the property to check for.
- obj
-The object to query.
-Returns
-
-Boolean Whether the property exists.
-Returns whether or not an object or its prototype chain has a property with the specified name
-
+### hasIn
+`s → {s: x} → Boolean`
+```
 function Rectangle(width, height) {
   this.width = width;
   this.height = height;
@@ -860,37 +822,22 @@ Rectangle.prototype.area = function() {
 var square = new Rectangle(2, 2);
 R.hasIn('width', square);  //=> true
 R.hasIn('area', square);  //=> true
-head Added in v0.1.0
+```
 
-[a] → a | Undefined
-String → String
-Parameters
-
-list
-Returns
-
-*
-Returns the first element of the given list or string. In some libraries this function is named first.
-
-See also tail, init, last.
-
+### head
+`[a] → a | Undefined`
+`String → String`
+```
 R.head(['fi', 'fo', 'fum']); //=> 'fi'
 R.head([]); //=> undefined
 
 R.head('abc'); //=> 'a'
 R.head(''); //=> ''
-identical Added in v0.15.0
+```
 
-a → a → Boolean
-Parameters
-
-a
-b
-Returns
-
-Boolean
-Returns true if its arguments are identical, false otherwise. Values are identical if they reference the same memory. NaN is identical to NaN; 0 and -0 are not identical.
-
+### identical
+`a → a → Boolean`
+```
 var o = {};
 R.identical(o, o); //=> true
 R.identical(1, 1); //=> true
@@ -898,40 +845,20 @@ R.identical(1, '1'); //=> false
 R.identical([], []); //=> false
 R.identical(0, -0); //=> false
 R.identical(NaN, NaN); //=> true
-identity Added in v0.1.0
+```
 
-a → a
-Parameters
-
-x
-The value to return.
-Returns
-
-* The input value, `x`.
-A function that does nothing but return the parameter supplied to it. Good as a default or placeholder function.
-
+### identity
+`a → a`
+```
 R.identity(1); //=> 1
 
 var obj = {};
 R.identity(obj) === obj; //=> true
-ifElse Added in v0.8.0
+```
 
-(*… → Boolean) → (*… → *) → (*… → *) → (*… → *)
-Parameters
-
-condition
-A predicate function
- onTrue
-A function to invoke when the condition evaluates to a truthy value.
- onFalse
-A function to invoke when the condition evaluates to a falsy value.
-Returns
-
-function A new unary function that will process either the `onTrue` or the `onFalse` function depending upon the result of the `condition` predicate.
-Creates a function that will process either the onTrue or the onFalse function depending upon the result of the condition predicate.
-
-See also unless, when.
-
+### ifElse
+`(*… → Boolean) → (*… → *) → (*… → *) → (*… → *)`
+```
 var incCount = R.ifElse(
   R.has('count'),
   R.over(R.lensProp('count'), R.inc),
@@ -939,71 +866,33 @@ var incCount = R.ifElse(
 );
 incCount({});           //=> { count: 1 }
 incCount({ count: 1 }); //=> { count: 2 }
-inc Added in v0.9.0
+```
 
-Number → Number
-Parameters
-
-n
-Returns
-
-Number n + 1
-Increments its argument.
-
-See also dec.
-
+### inc
+`Number → Number`
+```
 R.inc(42); //=> 43
-indexBy Added in v0.19.0
+```
 
-(a → String) → [{k: v}] → {k: {k: v}}
-Parameters
-
-fn
-Function :: a -> String
- array
-The array of objects to index
-Returns
-
-Object An object indexing each array element by the given property.
-Given a function that generates a key, turns a list of objects into an object indexing the objects by the given key. Note that if multiple objects generate the same value for the indexing key only the last value will be included in the generated object.
-
-Acts as a transducer if a transformer is given in list position.
-
+### indexBy
+`(a → String) → [{k: v}] → {k: {k: v}}`
+```
 var list = [{id: 'xyz', title: 'A'}, {id: 'abc', title: 'B'}];
 R.indexBy(R.prop('id'), list);
 //=> {abc: {id: 'abc', title: 'B'}, xyz: {id: 'xyz', title: 'A'}}
-indexOf Added in v0.1.0
+```
 
-a → [a] → Number
-Parameters
-
-target
-The item to find.
- xs
-The array to search in.
-Returns
-
-Number the index of the target, or -1 if the target is not found.
-Returns the position of the first occurrence of an item in an array, or -1 if the item is not included in the array. R.equals is used to determine equality.
-
-See also lastIndexOf.
-
+### indexOf
+`a → [a] → Number` 
+```
 R.indexOf(3, [1,2,3,4]); //=> 2
 R.indexOf(10, [1,2,3,4]); //=> -1
-init Added in v0.9.0
+```
 
-[a] → [a]
-String → String
-Parameters
-
-list
-Returns
-
-*
-Returns all but the last element of the given list or string.
-
-See also last, head, tail.
-
+### init
+`[a] → [a]`
+`String → String`
+```
 R.init([1, 2, 3]);  //=> [1, 2]
 R.init([1, 2]);     //=> [1]
 R.init([1]);        //=> []
@@ -1013,25 +902,11 @@ R.init('abc');  //=> 'ab'
 R.init('ab');   //=> 'a'
 R.init('a');    //=> ''
 R.init('');     //=> ''
-innerJoin Added in v0.24.0
+```
 
-((a, b) → Boolean) → [a] → [b] → [a]
-Parameters
-
-pred
-xs
-ys
-Returns
-
-Array
-Takes a predicate pred, a list xs, and a list ys, and returns a list xs' comprising each of the elements of xs which is equal to one or more elements of ys according to pred.
-
-pred must be a binary function expecting an element from each list.
-
-xs, ys, and xs' are treated as sets, semantically, so ordering should not be significant, but since xs' is ordered the implementation guarantees that its values are in the same order as they appear in xs. Duplicates are not removed, so xs' may contain duplicates if xs contains duplicates.
-
-See also intersection.
-
+### innerJoin
+`((a, b) → Boolean) → [a] → [b] → [a]`
+```
 R.innerJoin(
   (record, id) => record.id === id,
   [{id: 824, name: 'Richie Furay'},
@@ -1042,96 +917,35 @@ R.innerJoin(
   [177, 456, 999]
 );
 //=> [{id: 456, name: 'Stephen Stills'}, {id: 177, name: 'Neil Young'}]
-insert Added in v0.2.2
+```
 
-Number → a → [a] → [a]
-Parameters
-
-index
-The position to insert the element
- elt
-The element to insert into the Array
- list
-The list to insert into
-Returns
-
-Array A new Array with `elt` inserted at `index`.
-Inserts the supplied element into the list, at the specified index. Note that this is not destructive: it returns a copy of the list with the changes. No lists have been harmed in the application of this function.
-
+### insert
+`Number → a → [a] → [a]`
+```
 R.insert(2, 'x', [1,2,3,4]); //=> [1,2,'x',3,4]
-insertAll Added in v0.9.0
+```
 
-Number → [a] → [a] → [a]
-Parameters
-
-index
-The position to insert the sub-list
- elts
-The sub-list to insert into the Array
- list
-The list to insert the sub-list into
-Returns
-
-Array A new Array with `elts` inserted starting at `index`.
-Inserts the sub-list into the list, at the specified index. Note that this is not destructive: it returns a copy of the list with the changes. No lists have been harmed in the application of this function.
-
+### insertAll
+`Number → [a] → [a] → [a]`
+```
 R.insertAll(2, ['x','y','z'], [1,2,3,4]); //=> [1,2,'x','y','z',3,4]
-intersection Added in v0.1.0
+```
 
-[*] → [*] → [*]
-Parameters
-
-list1
-The first list.
- list2
-The second list.
-Returns
-
-Array The list of elements found in both `list1` and `list2`.
-Combines two lists into a set (i.e. no duplicates) composed of those elements common to both lists.
-
-See also innerJoin.
-
+### intersection
+`[*] → [*] → [*]`
+```
 R.intersection([1,2,3,4], [7,6,5,4,3]); //=> [4, 3]
-intersperse Added in v0.14.0
+```
 
-a → [a] → [a]
-Parameters
-
-separator
-The element to add to the list.
- list
-The list to be interposed.
-Returns
-
-Array The new list.
-Creates a new list with the separator interposed between elements.
-
-Dispatches to the intersperse method of the second argument, if present.
-
+### intersperse
+`a → [a] → [a]`
+```
 R.intersperse('n', ['ba', 'a', 'a']); //=> ['ba', 'n', 'a', 'n', 'a']
-into Added in v0.12.0
+``` 
 
-a → (b → b) → [c] → a
-Parameters
-
-acc
-The initial accumulator value.
- xf
-The transducer function. Receives a transformer and returns a transformer.
- list
-The list to iterate over.
-Returns
-
-* The final, accumulated value.
-Transforms the items of the list with the transducer and appends the transformed items to the accumulator using an appropriate iterator function based on the accumulator type.
-
-The accumulator can be an array, string, object or a transformer. Iterated items will be appended to arrays and concatenated to strings. Objects will be merged directly or 2-item arrays will be merged as key, value pairs.
-
-The accumulator can also be a transformer object that provides a 2-arity reducing iterator function, step, 0-arity initial value function, init, and 1-arity result extraction function result. The step function is used as the iterator function in reduce. The result function is used to convert the final accumulator into the return type and in most cases is R.identity. The init function is used to provide the initial accumulator.
-
-The iteration is performed with R.reduce after initializing the transducer.
-
+### into
+`a → (b → b) → [c] → a`
+```
 var numbers = [1, 2, 3, 4];
 var transducer = R.compose(R.map(R.add(1)), R.take(2));
 
@@ -1139,20 +953,11 @@ R.into([], transducer, numbers); //=> [2, 3]
 
 var intoArray = R.into([]);
 intoArray(transducer, numbers); //=> [2, 3]
-invert Added in v0.9.0
+```
 
-{s: x} → {x: [ s, … ]}
-Parameters
-
-obj
-The object or array to invert
-Returns
-
-Object out A new object with keys in an array.
-Same as R.invertObj, however this accounts for objects with duplicate values by putting the values into an array.
-
-See also invertObj.
-
+### invert
+`{s: x} → {x: [ s, … ]}`
+```
 var raceResultsByFirstName = {
   first: 'alice',
   second: 'jake',
@@ -1160,20 +965,11 @@ var raceResultsByFirstName = {
 };
 R.invert(raceResultsByFirstName);
 //=> { 'alice': ['first', 'third'], 'jake':['second'] }
-invertObj Added in v0.9.0
+```
 
-{s: x} → {x: s}
-Parameters
-
-obj
-The object or array to invert
-Returns
-
-Object out A new object
-Returns a new object with the keys of the given object as values, and the values of the given object, which are coerced to strings, as keys. Note that the last key found is preferred when handling the same value.
-
-See also invert.
-
+### invertObj
+`{s: x} → {x: s}`
+```
 var raceResults = {
   first: 'alice',
   second: 'jake'
@@ -1185,42 +981,20 @@ R.invertObj(raceResults);
 var raceResults = ['alice', 'jake'];
 R.invertObj(raceResults);
 //=> { 'alice': '0', 'jake':'1' }
-invoker Added in v0.1.0
+```
 
-Number → String → (a → b → … → n → Object → *)
-Parameters
-
-arity
-Number of arguments the returned function should take before the target object.
- method
-Name of the method to call.
-Returns
-
-function A new curried function.
-Turns a named method with a specified arity into a function that can be called directly supplied with arguments and a target object.
-
-The returned function is curried and accepts arity + 1 parameters where the final parameter is the target object.
-
-See also construct.
-
+### invoker
+`Number → String → (a → b → … → n → Object → *)`
+```
 var sliceFrom = R.invoker(1, 'slice');
 sliceFrom(6, 'abcdefghijklm'); //=> 'ghijklm'
 var sliceFrom6 = R.invoker(2, 'slice')(6);
 sliceFrom6(8, 'abcdefghijklm'); //=> 'gh'
-is Added in v0.3.0
+```
 
-(* → {*}) → a → Boolean
-Parameters
-
-ctor
-A constructor
- val
-The value to test
-Returns
-
-Boolean
-See if an object (val) is an instance of the supplied constructor. This function will check up the inheritance chain, if any.
-
+### is
+`(* → {*}) → a → Boolean`
+```
 R.is(Object, {}); //=> true
 R.is(Number, 1); //=> true
 R.is(Object, 1); //=> false
@@ -1229,199 +1003,105 @@ R.is(String, new String('')); //=> true
 R.is(Object, new String('')); //=> true
 R.is(Object, 's'); //=> false
 R.is(Number, {}); //=> false
-isEmpty Added in v0.1.0
+```
 
-a → Boolean
-Parameters
-
-x
-Returns
-
-Boolean
-Returns true if the given value is its type's empty value; false otherwise.
-
-See also empty.
-
+### isEmpty
+`a → Boolean`
+```
 R.isEmpty([1, 2, 3]);   //=> false
 R.isEmpty([]);          //=> true
 R.isEmpty('');          //=> true
 R.isEmpty(null);        //=> false
 R.isEmpty({});          //=> true
 R.isEmpty({length: 0}); //=> false
-isNil Added in v0.9.0
+```
 
-* → Boolean
-Parameters
-
-x
-The value to test.
-Returns
-
-Boolean `true` if `x` is `undefined` or `null`, otherwise `false`.
-Checks if the input value is null or undefined.
-
+### isNil
+`* → Boolean` 
+```
 R.isNil(null); //=> true
 R.isNil(undefined); //=> true
 R.isNil(0); //=> false
 R.isNil([]); //=> false
-join Added in v0.1.0
+```
 
-String → [a] → String
-Parameters
-
-separator
-The string used to separate the elements.
- xs
-The elements to join into a string.
-Returns
-
-String str The string made by concatenating `xs` with `separator`.
-Returns a string made by inserting the separator between each element and concatenating all the elements into a single string.
-
-See also split.
-
+### join
+`String → [a] → String`
+```
 var spacer = R.join(' ');
 spacer(['a', 2, 3.4]);   //=> 'a 2 3.4'
 R.join('|', [1, 2, 3]);    //=> '1|2|3'
-juxt Added in v0.19.0
+```
 
-[(a, b, …, m) → n] → ((a, b, …, m) → [n])
-Parameters
-
-fns
-An array of functions
-Returns
-
-function A function that returns a list of values after applying each of the original `fns` to its parameters.
-juxt applies a list of functions to a list of values.
-
-See also applySpec.
-
+### juxt
+`[(a, b, …, m) → n] → ((a, b, …, m) → [n])`
+```
 var getRange = R.juxt([Math.min, Math.max]);
 getRange(3, 4, 9, -3); //=> [-3, 9]
-keys Added in v0.1.0
+```
 
-{k: v} → [k]
-Parameters
-
-obj
-The object to extract properties from
-Returns
-
-Array An array of the object's own properties.
-Returns a list containing the names of all the enumerable own properties of the supplied object. Note that the order of the output array is not guaranteed to be consistent across different JS platforms.
-
-See also keysIn, values.
-
+### keys
+`{k: v} → [k]`
+```
 R.keys({a: 1, b: 2, c: 3}); //=> ['a', 'b', 'c']
-keysIn Added in v0.2.0
+```
 
-{k: v} → [k]
-Parameters
-
-obj
-The object to extract properties from
-Returns
-
-Array An array of the object's own and prototype properties.
-Returns a list containing the names of all the properties of the supplied object, including prototype properties. Note that the order of the output array is not guaranteed to be consistent across different JS platforms.
-
-See also keys, valuesIn.
-
+### keysIn
+`{k: v} → [k]`
+```
 var F = function() { this.x = 'X'; };
 F.prototype.y = 'Y';
 var f = new F();
 R.keysIn(f); //=> ['x', 'y']
-last Added in v0.1.4
+```
 
-[a] → a | Undefined
-String → String
-Parameters
-
-list
-Returns
-
-*
-Returns the last element of the given list or string.
-
-See also init, head, tail.
-
+### last
+`[a] → a | Undefined`
+`String → String`
+```
 R.last(['fi', 'fo', 'fum']); //=> 'fum'
 R.last([]); //=> undefined
 
 R.last('abc'); //=> 'c'
 R.last(''); //=> ''
-lastIndexOf Added in v0.1.0
+```
 
-a → [a] → Number
-Parameters
-
-target
-The item to find.
- xs
-The array to search in.
-Returns
-
-Number the index of the target, or -1 if the target is not found.
-Returns the position of the last occurrence of an item in an array, or -1 if the item is not included in the array. R.equals is used to determine equality.
-
-See also indexOf.
-
+### lastIndexOf
+`a → [a] → Number`
+```
 R.lastIndexOf(3, [-1,3,3,0,1,2,3,4]); //=> 6
 R.lastIndexOf(10, [1,2,3,4]); //=> -1
-length Added in v0.3.0
+```
 
-[a] → Number
-Parameters
-
-list
-The array to inspect.
-Returns
-
-Number The length of the array.
-Returns the number of elements in the array by returning list.length.
-
+### length
+`[a] → Number`
+```
 R.length([]); //=> 0
 R.length([1, 2, 3]); //=> 3
-lens Added in v0.8.0
+```
 
-(s → a) → ((a, s) → s) → Lens s a
-Lens s a = Functor f => (a → f a) → s → f s
-Parameters
-
-getter
-setter
-Returns
-
-Lens
-Returns a lens for the given getter and setter functions. The getter "gets" the value of the focus; the setter "sets" the value of the focus. The setter should not mutate the data structure.
-
-See also view, set, over, lensIndex, lensProp.
-
+### lens
+`(s → a) → ((a, s) → s) → Lens s a` 
+`Lens s a = Functor f => (a → f a) → s → f s`
+```
 var xLens = R.lens(R.prop('x'), R.assoc('x'));
 
 R.view(xLens, {x: 1, y: 2});            //=> 1
 R.set(xLens, 4, {x: 1, y: 2});          //=> {x: 4, y: 2}
 R.over(xLens, R.negate, {x: 1, y: 2});  //=> {x: -1, y: 2}
-lensIndex Added in v0.14.0
+```
 
-Number → Lens s a
-Lens s a = Functor f => (a → f a) → s → f s
-Parameters
-
-n
-Returns
-
-Lens
-Returns a lens whose focus is the specified index.
-
-See also view, set, over.
-
+### lensIndex
+`Number → Lens s a`
+`Lens s a = Functor f => (a → f a) → s → f s`
+```
 var headLens = R.lensIndex(0);
 
 R.view(headLens, ['a', 'b', 'c']);            //=> 'a'
 R.set(headLens, 'x', ['a', 'b', 'c']);        //=> ['x', 'b', 'c']
 R.over(headLens, R.toUpper, ['a', 'b', 'c']); //=> ['A', 'b', 'c']
+```
+
 lensPath Added in v0.19.0
 
 [Idx] → Lens s a
