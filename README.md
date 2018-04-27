@@ -1,55 +1,57 @@
 # Quick knowledge Ramda
+## Ramda
+Biblioteca de Javascript funcional.
 
 ## Logic
-* R.addIndex
-* R.always
-* R.ap
-* R.apply
-* R.applySpec
-* R.applyTo
-* R.ascend
-* R.binary
-* R.bind
-* R.call
-* R.comparator
-* R.compose
-* R.composeK
-* R.composeP
-* R.construct
-* R.constructN
-* R.converge
-* R.curry
-* R.curryN
-* R.descend
-* R.empty
-* R.F
-* R.flip
-* R.identity
-* R.invoker
-* R.juxt
-* R.lift
-* R.liftN
-* R.memoize
-* R.memoizeWith
-* R.nAry
-* R.nthArg
-* R.o
-* R.of
-* R.once
-* R.partial
-* R.partialRight
-* R.pipe
-* R.pipeK
-* R.pipeP
-* R.T
-* R.tap
-* R.tryCatch
-* R.unapply
-* R.unary
-* R.uncurryN
-* R.useWith
-* R.__
- 
+* [R.addIndex](#addindex)
+* [R.always](#always)
+* [R.ap](#ap)
+* [R.apply](#apply)
+* [R.applySpec](#applyspec)
+* [R.applyTo](#applyto)
+* [R.ascend](#ascend)
+* [R.binary](#binary)
+* [R.bind](#bind)
+* [R.call](#call)
+* [R.comparator](#comparator)
+* [R.compose](#compose)
+* [R.composeK](#composek)
+* [R.composeP](#composep)
+* [R.construct](#construct)
+* [R.constructN](#constructn)
+* [R.converge](#converge)
+* [R.curry](#curry)
+* [R.curryN](#curryn)
+* [R.descend](#descend)
+* [R.empty](#empty)
+* [R.F](#f)
+* [R.flip](#flip)
+* [R.identity](#identity)
+* [R.invoker](#invoker)
+* [R.juxt](#juxt)
+* [R.lift](#lift)
+* [R.liftN](#liftn)
+* [R.memoize](#memoize)
+* [R.memoizeWith](#memoizewith)
+* [R.nAry](#nary)
+* [R.nthArg](#ntharg)
+* [R.o](#o)
+* [R.of](#of)
+* [R.once](#once)
+* [R.partial](#partial)
+* [R.partialRight](#partialright)
+* [R.pipe](#pipe)
+* [R.pipeK](#pipek)
+* [R.pipeP](#pipep)
+* [R.T](#t)
+* [R.tap](#tap)
+* [R.tryCatch](#trycatch)
+* [R.unapply](#unapply)
+* [R.unary](#unary)
+* [R.uncurryN](#uncurryn)
+* [R.useWith](#usewith)
+* [R.__](#__)
+
 ## List
 * R.adjust
 * R.all
@@ -261,10 +263,6 @@
 * R.isNil
 * R.propIs
 * R.type
-
-
-## Ramda
-Biblioteca de Javascript funcional.
 
 ### __ 
 ```js
