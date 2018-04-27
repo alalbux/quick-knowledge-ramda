@@ -1,159 +1,266 @@
 # Quick knowledge Ramda
 
-* Function
-  * R.addIndex
-  * R.always
-  * R.ap
-  * R.apply
-  * R.applySpec
-  * R.applyTo
-  * R.ascend
-  * R.binary
-  * R.bind
-  * R.call
-  * R.comparator
-  * R.compose
-  * R.composeK
-  * R.composeP
-  * R.construct
-  * R.constructN
-  * R.converge
-  * R.curry
-  * R.curryN
-  * R.descend
-  * R.empty
-  * R.F
-  * R.flip
-  * R.identity
-  * R.invoker
-  * R.juxt
-  * R.lift
-  * R.liftN
-  * R.memoize
-  * R.memoizeWith
-  * R.nAry
-  * R.nthArg
-  * R.o
-  * R.of
-  * R.once
-  * R.partial
-  * R.partialRight
-  * R.pipe
-  * R.pipeK
-  * R.pipeP
-  * R.T
-  * R.tap
-  * R.tryCatch
-  * R.unapply
-  * R.unary
-  * R.uncurryN
-  * R.useWith
-  * R.__
+## Logic
+* R.addIndex
+* R.always
+* R.ap
+* R.apply
+* R.applySpec
+* R.applyTo
+* R.ascend
+* R.binary
+* R.bind
+* R.call
+* R.comparator
+* R.compose
+* R.composeK
+* R.composeP
+* R.construct
+* R.constructN
+* R.converge
+* R.curry
+* R.curryN
+* R.descend
+* R.empty
+* R.F
+* R.flip
+* R.identity
+* R.invoker
+* R.juxt
+* R.lift
+* R.liftN
+* R.memoize
+* R.memoizeWith
+* R.nAry
+* R.nthArg
+* R.o
+* R.of
+* R.once
+* R.partial
+* R.partialRight
+* R.pipe
+* R.pipeK
+* R.pipeP
+* R.T
+* R.tap
+* R.tryCatch
+* R.unapply
+* R.unary
+* R.uncurryN
+* R.useWith
+* R.__
  
-* List
-  * R.adjust
-  * R.all
-  * R.any
-  * R.aperture
-  * R.append
-  * R.chain
-  * R.concat
-  * R.contains
-  * R.drop
-  * R.dropLast
-  * R.dropLastWhile
-  * R.dropRepeats
-  * R.dropRepeatsWith
-  * R.dropWhile
-  * R.endsWith
-  * R.filter
-  * R.find
-  * R.findIndex
-  * R.findLast
-  * R.findLastIndex
-  * R.flatten
-  * R.forEach
-  * R.fromPairs
-  * R.groupBy
-  * R.groupWith
-  * R.head
-  * R.indexBy
-  * R.indexOf
-  * R.init
-  * R.insert
-  * R.insertAll
-  * R.intersperse
-  * R.into
-  * R.join
-  * R.last
-  * R.lastIndexOf
-  * R.length
-  * R.m* ap
-  * R.mapAccum
-  * R.mapAccumRight
-  * R.mergeAll
-  * R.none
-  * R.nth
-  * R.pair
-  * R.partition
-  * R.pluck
-  * R.prepend
-  * R.range
-  * R.reduce
-  * R.reduceBy
-  * R.reduced
-  * R.reduceRight
-  * R.reduceWhile
-  * R.reject
-  * R.remove
-  * R.repeat
-  * R.reverse
-  * R.scan
-  * R.sequence
-  * R.slice
-  * R.sort
-  * R.splitAt
-  * R.splitEvery
-  * R.splitWhen
-  * R.startsWith
-  * R.tail
-  * R.take
-  * R.takeLast
-  * R.takeLastWhile
-  * R.takeWhile
-  * R.times
-  * R.transduce
-  * R.transpose
-  * R.traverse
-  * R.unfold
-  * R.uniq
-  * R.uniqBy
-  * R.uniqWith
-  * R.unnest
-  * R.update
-  * R.without
-  * R.xprod
-  * R.zip
-  * R.zipObj
-  * R.zipWith
+## List
+* R.adjust
+* R.all
+* R.any
+* R.aperture
+* R.append
+* R.chain
+* R.concat
+* R.contains
+* R.drop
+* R.dropLast
+* R.dropLastWhile
+* R.dropRepeats
+* R.dropRepeatsWith
+* R.dropWhile
+* R.endsWith
+* R.filter
+* R.find
+* R.findIndex
+* R.findLast
+* R.findLastIndex
+* R.flatten
+* R.forEach
+* R.fromPairs
+* R.groupBy
+* R.groupWith
+* R.head
+* R.indexBy
+* R.indexOf
+* R.init
+* R.insert
+* R.insertAll
+* R.intersperse
+* R.into
+* R.join
+* R.last
+* R.lastIndexOf
+* R.length
+* R.m* ap
+* R.mapAccum
+* R.mapAccumRight
+* R.mergeAll
+* R.none
+* R.nth
+* R.pair
+* R.partition
+* R.pluck
+* R.prepend
+* R.range
+* R.reduce
+* R.reduceBy
+* R.reduced
+* R.reduceRight
+* R.reduceWhile
+* R.reject
+* R.remove
+* R.repeat
+* R.reverse
+* R.scan
+* R.sequence
+* R.slice
+* R.sort
+* R.splitAt
+* R.splitEvery
+* R.splitWhen
+* R.startsWith
+* R.tail
+* R.take
+* R.takeLast
+* R.takeLastWhile
+* R.takeWhile
+* R.times
+* R.transduce
+* R.transpose
+* R.traverse
+* R.unfold
+* R.uniq
+* R.uniqBy
+* R.uniqWith
+* R.unnest
+* R.update
+* R.without
+* R.xprod
+* R.zip
+* R.zipObj
+* R.zipWith
+  
+## Logic
+* R.allPass
+* R.and
+* R.anyPass
+* R.both
+* R.complement
+* R.cond
+* R.defaultTo
+* R.either
+* R.ifElse
+* R.isEmpty
+* R.not
+* R.or
+* R.pathSatisfies
+* R.propSatisfies
+* R.unless
+* R.until
+* R.when
 
-* [__](#__)
-* [add](#add)
-* [addindex](#addindex)
-* [adjust](#adjust)
-* [all](#all)
-* [allPass](#allpass)
-* [always](#always)
-* [and](#and)
-* [any](#any)
-* [anyPass](#anypass)
-* [ap](#ap)
-* [aperture](#aperture)
-* [append](#append)
-* [apply](#apply)
-* [applySpec](#applyspec)
-* [applyTo](#applyto)
-* [ascend](#ascend)
+## Math
+* R.add
+* R.dec
+* R.divide
+* R.inc
+* R.mathMod
+* R.mean
+* R.median
+* R.modulo
+* R.multiply
+* R.negate
+* R.product
+* R.subtract
+* R.sum
+
+## Object
+* R.assoc
+* R.assocPath
+* R.clone
+* R.dissoc
+* R.dissocPath
+* R.eqProps
+* R.evolve
+* R.forEachObjIndexed
+* R.has
+* R.hasIn
+* R.invert
+* R.invertObj
+* R.keys
+* R.keysIn
+* R.lens
+* R.lensIndex
+* R.lensPath
+* R.lensProp
+* R.mapObjIndexed
+* R.merge
+* R.mergeDeepLeft
+* R.mergeDeepRight
+* R.mergeDeepWith
+* R.mergeDeepWithKey
+* R.mergeWith
+* R.mergeWithKey
+* R.objOf
+* R.omit
+* R.over
+* R.path
+* R.pathOr
+* R.pick
+* R.pickAll
+* R.pickBy
+* R.project
+* R.prop
+* R.propOr
+* R.props
+* R.set
+* R.toPairs
+* R.toPairsIn
+* R.values
+* R.valuesIn
+* R.view
+* R.where
+* R.whereEq
+
+## Relation
+* R.clamp
+* R.countBy
+* R.difference
+* R.differenceWith
+* R.eqBy
+* R.equals
+* R.gt
+* R.gte
+* R.identical
+* R.innerJoin
+* R.intersection
+* R.lt
+* R.lte
+* R.max
+* R.maxBy
+* R.min
+* R.minBy
+* R.pathEq
+* R.propEq
+* R.sortBy
+* R.sortWith
+* R.symmetricDifference
+* R.symmetricDifferenceWith
+* R.union
+* R.unionWith
+
+## String
+* R.match
+* R.replace
+* R.split
+* R.test
+* R.toLower
+* R.toString
+* R.toUpper
+* R.trim
+
+## Type
+* R.is
+* R.isNil
+* R.propIs
+* R.type
 
 
 ## Ramda
