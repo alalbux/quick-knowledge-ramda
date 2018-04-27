@@ -4,7 +4,6 @@
 Biblioteca de Javascript funcional.
 
 ### __ 
-If `g` is a curried ternary function and `_` is `R.__`, the following are equivalent:
 ```js
 g(1, 2, 3)
 g(_, 2, 3)(1)
@@ -1315,117 +1314,53 @@ R.mergeDeepRight({ name: 'fred', age: 10, contact: { email: 'moo@example.com' }}
 
 ### mergeDeepWith Added in v0.24.0
 
-((a, a) → a) → {a} → {a} → {a}
-Parameters
-
-fn
-lObj
-rObj
-Returns
-
-Object
-Creates a new object with the own properties of the two provided objects. If a key exists in both objects:
-
-and both associated values are also objects then the values will be recursively merged.
-otherwise the provided function is applied to associated values using the resulting value as the new value associated with the key. If a key only exists in one object, the value will be associated with the key of the resulting object.
-See also mergeWith, mergeDeep, mergeDeepWithKey.
-
+`((a, a) → a) → {a} → {a} → {a}`
+```js
 R.mergeDeepWith(R.concat,
                 { a: true, c: { values: [10, 20] }},
                 { b: true, c: { values: [15, 35] }});
 //=> { a: true, b: true, c: { values: [10, 20, 15, 35] }}
-mergeDeepWithKey Added in v0.24.0
+```
 
-((String, a, a) → a) → {a} → {a} → {a}
-Parameters
-
-fn
-lObj
-rObj
-Returns
-
-Object
-Creates a new object with the own properties of the two provided objects. If a key exists in both objects:
-
-and both associated values are also objects then the values will be recursively merged.
-otherwise the provided function is applied to the key and associated values using the resulting value as the new value associated with the key. If a key only exists in one object, the value will be associated with the key of the resulting object.
-See also mergeWithKey, mergeDeep, mergeDeepWith.
-
+### mergeDeepWithKey
+`((String, a, a) → a) → {a} → {a} → {a}`
+```js
 let concatValues = (k, l, r) => k == 'values' ? R.concat(l, r) : r
 R.mergeDeepWithKey(concatValues,
                    { a: true, c: { thing: 'foo', values: [10, 20] }},
                    { b: true, c: { thing: 'bar', values: [15, 35] }});
 //=> { a: true, b: true, c: { thing: 'bar', values: [10, 20, 15, 35] }}
-mergeWith Added in v0.19.0
+```
 
-((a, a) → a) → {a} → {a} → {a}
-Parameters
-
-fn
-l
-r
-Returns
-
-Object
-Creates a new object with the own properties of the two provided objects. If a key exists in both objects, the provided function is applied to the values associated with the key in each object, with the result being used as the value associated with the key in the returned object.
-
-See also mergeDeepWith, merge, mergeWithKey.
-
+### mergeWith
+`((a, a) → a) → {a} → {a} → {a}`
+```js
 R.mergeWith(R.concat,
             { a: true, values: [10, 20] },
             { b: true, values: [15, 35] });
 //=> { a: true, b: true, values: [10, 20, 15, 35] }
-mergeWithKey Added in v0.19.0
+```
 
-((String, a, a) → a) → {a} → {a} → {a}
-Parameters
-
-fn
-l
-r
-Returns
-
-Object
-Creates a new object with the own properties of the two provided objects. If a key exists in both objects, the provided function is applied to the key and the values associated with the key in each object, with the result being used as the value associated with the key in the returned object.
-
-See also mergeDeepWithKey, merge, mergeWith.
-
+### mergeWithKey
+`((String, a, a) → a) → {a} → {a} → {a}`
+```js
 let concatValues = (k, l, r) => k == 'values' ? R.concat(l, r) : r
 R.mergeWithKey(concatValues,
                { a: true, thing: 'foo', values: [10, 20] },
                { b: true, thing: 'bar', values: [15, 35] });
 //=> { a: true, b: true, thing: 'bar', values: [10, 20, 15, 35] }
-min Added in v0.1.0
+```
 
-Ord a => a → a → a
-Parameters
-
-a
-b
-Returns
-
-*
-Returns the smaller of its two arguments.
-
-See also minBy, max.
-
+### min
+`Ord a => a → a → a`
+```js
 R.min(789, 123); //=> 123
 R.min('a', 'b'); //=> 'a'
-minBy Added in v0.8.0
+```
 
-Ord b => (a → b) → a → a → a
-Parameters
-
-f
-a
-b
-Returns
-
-*
-Takes a function and two values, and returns whichever value produces the smaller result when passed to the provided function.
-
-See also min, maxBy.
-
+### minBy
+`Ord b => (a → b) → a → a → a`
+```js
 //  square :: Number -> Number
 var square = n => n * n;
 
@@ -1433,22 +1368,11 @@ R.minBy(square, -3, 2); //=> 2
 
 R.reduce(R.minBy(square), Infinity, [3, -5, 4, 1, -2]); //=> 1
 R.reduce(R.minBy(square), Infinity, []); //=> Infinity
-modulo Added in v0.1.1
+```
 
-Number → Number → Number
-Parameters
-
-a
-The value to the divide.
- b
-The pseudo-modulus
-Returns
-
-Number The result of `b % a`.
-Divides the first parameter by the second and returns the remainder. Note that this function preserves the JavaScript-style behavior for modulo. For mathematical modulo see mathMod.
-
-See also mathMod.
-
+### modulo
+`Number → Number → Number`
+```js
 R.modulo(17, 3); //=> 2
 // JS behavior:
 R.modulo(-17, 3); //=> -2
@@ -1457,43 +1381,21 @@ R.modulo(17, -3); //=> 2
 var isOdd = R.modulo(R.__, 2);
 isOdd(42); //=> 0
 isOdd(21); //=> 1
-multiply Added in v0.1.0
+```
 
-Number → Number → Number
-Parameters
-
-a
-The first value.
- b
-The second value.
-Returns
-
-Number The result of `a * b`.
-Multiplies two numbers. Equivalent to a * b but curried.
-
-See also divide.
-
+### multiply
+`Number → Number → Number`
+```js
 var double = R.multiply(2);
 var triple = R.multiply(3);
 double(3);       //=>  6
 triple(4);       //=> 12
 R.multiply(2, 5);  //=> 10
-nAry Added in v0.1.0
+```
 
-Number → (* → a) → (* → a)
-Parameters
-
-n
-The desired arity of the new function.
- fn
-The function to wrap.
-Returns
-
-function A new function wrapping `fn`. The new function is guaranteed to be of arity `n`.
-Wraps a function of any arity (including nullary) in a function that accepts exactly n parameters. Any extraneous parameters will not be passed to the supplied function.
-
-See also binary, unary.
-
+### nAry
+`Number → (* → a) → (* → a)`
+```js
 var takesTwoArgs = (a, b) => [a, b];
 
 takesTwoArgs.length; //=> 2
@@ -1503,72 +1405,37 @@ var takesOneArg = R.nAry(1, takesTwoArgs);
 takesOneArg.length; //=> 1
 // Only `n` arguments are passed to the wrapped function
 takesOneArg(1, 2); //=> [1, undefined]
-negate Added in v0.9.0
+```
 
-Number → Number
-Parameters
-
-n
-Returns
-
-Number
-Negates its argument.
-
+### negate
+`Number → Number`
+```js
 R.negate(42); //=> -42
-none Added in v0.12.0
+```
 
-(a → Boolean) → [a] → Boolean
-Parameters
-
-fn
-The predicate function.
- list
-The array to consider.
-Returns
-
-Boolean `true` if the predicate is not satisfied by every element, `false` otherwise.
-Returns true if no elements of the list match the predicate, false otherwise.
-
-Dispatches to the any method of the second argument, if present.
-
-See also all, any.
-
+### none
+`(a → Boolean) → [a] → Boolean`
+```js
 var isEven = n => n % 2 === 0;
 var isOdd = n => n % 2 === 1;
 
 R.none(isEven, [1, 3, 5, 7, 9, 11]); //=> true
 R.none(isOdd, [1, 3, 5, 7, 8, 11]); //=> false
-not Added in v0.1.0
+```
 
-* → Boolean
-Parameters
-
-a
-any value
-Returns
-
-Boolean the logical inverse of passed argument.
-A function that returns the ! of its argument. It will return true when passed false-y value, and false when passed a truth-y one.
-
-See also complement.
-
+### not
+`* → Boolean`
+```js
 R.not(true); //=> false
 R.not(false); //=> true
 R.not(0); //=> true
 R.not(1); //=> false
-nth Added in v0.1.0
+```
 
-Number → [a] → a | Undefined
-Number → String → String
-Parameters
-
-offset
-list
-Returns
-
-*
-Returns the nth element of the given list or string. If n is negative the element at index length + n is returned.
-
+### nth
+`Number → [a] → a | Undefined`
+`Number → String → String`
+```js
 var list = ['foo', 'bar', 'baz', 'quux'];
 R.nth(1, list); //=> 'bar'
 R.nth(-1, list); //=> 'quux'
@@ -1576,171 +1443,83 @@ R.nth(-99, list); //=> undefined
 
 R.nth(2, 'abc'); //=> 'c'
 R.nth(3, 'abc'); //=> ''
-nthArg Added in v0.9.0
+```
 
-Number → *… → *
-Parameters
-
-n
-Returns
-
-function
-Returns a function which returns its nth argument.
-
+### nthArg
+`Number → *… → *`
+```js
 R.nthArg(1)('a', 'b', 'c'); //=> 'b'
 R.nthArg(-1)('a', 'b', 'c'); //=> 'c'
-o Added in v0.24.0
+```
 
-(b → c) → (a → b) → a → c
-Parameters
-
-f
-g
-Returns
-
-function
-o is a curried composition function that returns a unary function. Like compose, o performs right-to-left function composition. Unlike compose, the rightmost function passed to o will be invoked with only one argument.
-
-See also compose, pipe.
-
+### o
+`(b → c) → (a → b) → a → c`
+```js
 var classyGreeting = name => "The name's " + name.last + ", " + name.first + " " + name.last
 var yellGreeting = R.o(R.toUpper, classyGreeting);
 yellGreeting({first: 'James', last: 'Bond'}); //=> "THE NAME'S BOND, JAMES BOND"
 
 R.o(R.multiply(10), R.add(10))(-4) //=> 60
-objOf Added in v0.18.0
+```
 
-String → a → {String:a}
-Parameters
-
-key
-val
-Returns
-
-Object
-Creates an object containing a single key:value pair.
-
-See also pair.
-
+### objOf
+`String → a → {String:a}`
+```js
 var matchPhrases = R.compose(
   R.objOf('must'),
   R.map(R.objOf('match_phrase'))
 );
 matchPhrases(['foo', 'bar', 'baz']); //=> {must: [{match_phrase: 'foo'}, {match_phrase: 'bar'}, {match_phrase: 'baz'}]}
-of Added in v0.3.0
+```
 
-a → [a]
-Parameters
-
-x
-any value
-Returns
-
-Array An array wrapping `x`.
-Returns a singleton array containing the value provided.
-
-Note this of is different from the ES6 of; See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/of
-
+### of
+`a → [a]`
+```js
 R.of(null); //=> [null]
 R.of([42]); //=> [[42]]
-omit Added in v0.1.0
+```
 
-[String] → {String: *} → {String: *}
-Parameters
-
-names
-an array of String property names to omit from the new object
- obj
-The object to copy from
-Returns
-
-Object A new object with properties from `names` not on it.
-Returns a partial copy of an object omitting the keys specified.
-
-See also pick.
-
+### omit 
+`[String] → {String: *} → {String: *}`
+```js
 R.omit(['a', 'd'], {a: 1, b: 2, c: 3, d: 4}); //=> {b: 2, c: 3}
-once Added in v0.1.0
+```
 
-(a… → b) → (a… → b)
-Parameters
-
-fn
-The function to wrap in a call-only-once wrapper.
-Returns
-
-function The wrapped function.
-Accepts a function fn and returns a function that guards invocation of fn such that fn can only ever be called once, no matter how many times the returned function is invoked. The first value calculated is returned in subsequent invocations.
-
+### once
+`(a… → b) → (a… → b)`
+```js
 var addOneOnce = R.once(x => x + 1);
 addOneOnce(10); //=> 11
 addOneOnce(addOneOnce(50)); //=> 11
-or Added in v0.1.0
+```
 
-a → b → a | b
-Parameters
-
-a
-b
-Returns
-
-Any the first argument if truthy, otherwise the second argument.
-Returns true if one or both of its arguments are true. Returns false if both arguments are false.
-
-See also either.
-
+### or
+`a → b → a | b`
+```js
 R.or(true, true); //=> true
 R.or(true, false); //=> true
 R.or(false, true); //=> true
 R.or(false, false); //=> false
-over Added in v0.16.0
+```
 
-Lens s a → (a → a) → s → s
-Lens s a = Functor f => (a → f a) → s → f s
-Parameters
-
-lens
-v
-x
-Returns
-
-*
-Returns the result of "setting" the portion of the given data structure focused by the given lens to the result of applying the given function to the focused value.
-
-See also prop, lensIndex, lensProp.
-
+### over
+`Lens s a → (a → a) → s → s` 
+`Lens s a = Functor f => (a → f a) → s → f s`
+```js
 var headLens = R.lensIndex(0);
 
 R.over(headLens, R.toUpper, ['foo', 'bar', 'baz']); //=> ['FOO', 'bar', 'baz']
-pair Added in v0.18.0
+```
 
-a → b → (a,b)
-Parameters
-
-fst
-snd
-Returns
-
-Array
-Takes two arguments, fst and snd, and returns [fst, snd].
-
-See also objOf, of.
-
+### pair
+`a → b → (a,b)`
+```js
 R.pair('foo', 'bar'); //=> ['foo', 'bar']
-partial Added in v0.10.0
+```
 
-((a, b, c, …, n) → x) → [a, b, c, …] → ((d, e, f, …, n) → x)
-Parameters
-
-f
-args
-Returns
-
-function
-Takes a function f and a list of arguments, and returns a function g. When applied, g returns the result of applying f to the arguments provided initially followed by the arguments provided to g.
-
-See also partialRight.
-
+### partial
+`((a, b, c, …, n) → x) → [a, b, c, …] → ((d, e, f, …, n) → x)`
+```js
 var multiply2 = (a, b) => a * b;
 var double = R.partial(multiply2, [2]);
 double(2); //=> 4
@@ -1751,212 +1530,96 @@ var greet = (salutation, title, firstName, lastName) =>
 var sayHello = R.partial(greet, ['Hello']);
 var sayHelloToMs = R.partial(sayHello, ['Ms.']);
 sayHelloToMs('Jane', 'Jones'); //=> 'Hello, Ms. Jane Jones!'
-partialRight Added in v0.10.0
+```
 
-((a, b, c, …, n) → x) → [d, e, f, …, n] → ((a, b, c, …) → x)
-Parameters
-
-f
-args
-Returns
-
-function
-Takes a function f and a list of arguments, and returns a function g. When applied, g returns the result of applying f to the arguments provided to g followed by the arguments provided initially.
-
-See also partial.
-
+### partialRight
+`((a, b, c, …, n) → x) → [d, e, f, …, n] → ((a, b, c, …) → x)`
+```js
 var greet = (salutation, title, firstName, lastName) =>
   salutation + ', ' + title + ' ' + firstName + ' ' + lastName + '!';
 
 var greetMsJaneJones = R.partialRight(greet, ['Ms.', 'Jane', 'Jones']);
 
 greetMsJaneJones('Hello'); //=> 'Hello, Ms. Jane Jones!'
-partition Added in v0.1.4
+```
 
-Filterable f => (a → Boolean) → f a → [f a, f a]
-Parameters
-
-pred
-A predicate to determine which side the element belongs to.
- filterable
-the list (or other filterable) to partition.
-Returns
-
-Array An array, containing first the subset of elements that satisfy the predicate, and second the subset of elements that do not satisfy.
-Takes a predicate and a list or other Filterable object and returns the pair of filterable objects of the same type of elements which do and do not satisfy, the predicate, respectively. Filterable objects include plain objects or any object that has a filter method such as Array.
-
-See also filter, reject.
-
+### partition
+`Filterable f => (a → Boolean) → f a → [f a, f a]`
+```js
 R.partition(R.contains('s'), ['sss', 'ttt', 'foo', 'bars']);
 // => [ [ 'sss', 'bars' ],  [ 'ttt', 'foo' ] ]
 
 R.partition(R.contains('s'), { a: 'sss', b: 'ttt', foo: 'bars' });
 // => [ { a: 'sss', foo: 'bars' }, { b: 'ttt' }  ]
-path Added in v0.2.0
+```
 
-[Idx] → {a} → a | Undefined
-Idx = String | Int
-Parameters
-
-path
-The path to use.
- obj
-The object to retrieve the nested property from.
-Returns
-
-* The data at `path`.
-Retrieve the value at a given path.
-
-See also prop.
-
+### path
+`[Idx] → {a} → a | Undefined`
+`Idx = String | Int`
+```js
 R.path(['a', 'b'], {a: {b: 2}}); //=> 2
 R.path(['a', 'b'], {c: {b: 2}}); //=> undefined
-pathEq Added in v0.7.0
+```
 
-[Idx] → a → {a} → Boolean
-Idx = String | Int
-Parameters
-
-path
-The path of the nested property to use
- val
-The value to compare the nested property with
- obj
-The object to check the nested property in
-Returns
-
-Boolean `true` if the value equals the nested object property, `false` otherwise.
-Determines whether a nested path on an object has a specific value, in R.equals terms. Most likely used to filter a list.
-
+### pathEq
+`[Idx] → a → {a} → Boolean`
+`Idx = String | Int`
+```js
 var user1 = { address: { zipCode: 90210 } };
 var user2 = { address: { zipCode: 55555 } };
 var user3 = { name: 'Bob' };
 var users = [ user1, user2, user3 ];
 var isFamous = R.pathEq(['address', 'zipCode'], 90210);
 R.filter(isFamous, users); //=> [ user1 ]
-pathOr Added in v0.18.0
+```
 
-a → [Idx] → {a} → a
-Idx = String | Int
-Parameters
-
-d
-The default value.
- p
-The path to use.
- obj
-The object to retrieve the nested property from.
-Returns
-
-* The data at `path` of the supplied object or the default value.
-If the given, non-null object has a value at the given path, returns the value at that path. Otherwise returns the provided default value.
-
+### pathOr
+`a → [Idx] → {a} → a`
+`Idx = String | Int`
+```js
 R.pathOr('N/A', ['a', 'b'], {a: {b: 2}}); //=> 2
 R.pathOr('N/A', ['a', 'b'], {c: {b: 2}}); //=> "N/A"
-pathSatisfies Added in v0.19.0
+```
 
-(a → Boolean) → [Idx] → {a} → Boolean
-Idx = String | Int
-Parameters
-
-pred
-propPath
-obj
-Returns
-
-Boolean
-Returns true if the specified object property at given path satisfies the given predicate; false otherwise.
-
-See also propSatisfies, path.
-
+### pathSatisfies
+`(a → Boolean) → [Idx] → {a} → Boolean`
+`Idx = String | Int`
+```js
 R.pathSatisfies(y => y > 0, ['x', 'y'], {x: {y: 2}}); //=> true
-pick Added in v0.1.0
+```
 
-[k] → {k: v} → {k: v}
-Parameters
-
-names
-an array of String property names to copy onto a new object
- obj
-The object to copy from
-Returns
-
-Object A new object with only properties from `names` on it.
-Returns a partial copy of an object containing only the keys specified. If the key does not exist, the property is ignored.
-
-See also omit, props.
-
+### pick
+`[k] → {k: v} → {k: v}`
+```js
 R.pick(['a', 'd'], {a: 1, b: 2, c: 3, d: 4}); //=> {a: 1, d: 4}
 R.pick(['a', 'e', 'f'], {a: 1, b: 2, c: 3, d: 4}); //=> {a: 1}
-pickAll Added in v0.1.0
+```
 
-[k] → {k: v} → {k: v}
-Parameters
-
-names
-an array of String property names to copy onto a new object
- obj
-The object to copy from
-Returns
-
-Object A new object with only properties from `names` on it.
-Similar to pick except that this one includes a key: undefined pair for properties that don't exist.
-
-See also pick.
-
+### pickAll
+`[k] → {k: v} → {k: v}`
+```js
 R.pickAll(['a', 'd'], {a: 1, b: 2, c: 3, d: 4}); //=> {a: 1, d: 4}
 R.pickAll(['a', 'e', 'f'], {a: 1, b: 2, c: 3, d: 4}); //=> {a: 1, e: undefined, f: undefined}
-pickBy Added in v0.8.0
+```
 
-((v, k) → Boolean) → {k: v} → {k: v}
-Parameters
-
-pred
-A predicate to determine whether or not a key should be included on the output object.
- obj
-The object to copy from
-Returns
-
-Object A new object with only properties that satisfy `pred` on it.
-Returns a partial copy of an object containing only the keys that satisfy the supplied predicate.
-
-See also pick, filter.
-
+### pickBy
+`((v, k) → Boolean) → {k: v} → {k: v}`
+```js
 var isUpperCase = (val, key) => key.toUpperCase() === key;
 R.pickBy(isUpperCase, {a: 1, b: 2, A: 3, B: 4}); //=> {A: 3, B: 4}
-pipe Added in v0.1.0
-
-(((a, b, …, n) → o), (o → p), …, (x → y), (y → z)) → ((a, b, …, n) → z)
-Parameters
-
-functions
-Returns
-
-function
-Performs left-to-right function composition. The leftmost function may have any arity; the remaining functions must be unary.
-
-In some libraries this function is named sequence.
-
-Note: The result of pipe is not automatically curried.
-
-See also compose.
-
+```
+### pipe
+`(((a, b, …, n) → o), (o → p), …, (x → y), (y → z)) → ((a, b, …, n) → z)`
+```js
 var f = R.pipe(Math.pow, R.negate, R.inc);
 
 f(3, 4); // -(3^4) + 1
-pipeK Added in v0.16.0
+```
 
-Chain m => ((a → m b), (b → m c), …, (y → m z)) → (a → m z)
-Parameters
-
-Returns
-
-function
-Returns the left-to-right Kleisli composition of the provided functions, each of which must return a value of a type supported by chain.
-
-R.pipeK(f, g, h) is equivalent to R.pipe(f, R.chain(g), R.chain(h)).
-
-See also composeK.
+### pipeK
+`Chain m => ((a → m b), (b → m c), …, (y → m z)) → (a → m z)`
+```js
+// R.pipeK(f, g, h) is equivalent to R.pipe(f, R.chain(g), R.chain(h)).
 
 //  parseJson :: String -> Maybe *
 //  get :: String -> Object -> Maybe *
@@ -1974,21 +1637,15 @@ getStateCode('{"user":{"address":{"state":"ny"}}}');
 //=> Just('NY')
 getStateCode('[Invalid JSON]');
 //=> Nothing()
-pipeP Added in v0.10.0
+```
 
-((a → Promise b), (b → Promise c), …, (y → Promise z)) → (a → Promise z)
-Parameters
-
-functions
-Returns
-
-function
-Performs left-to-right composition of one or more Promise-returning functions. The leftmost function may have any arity; the remaining functions must be unary.
-
-See also composeP.
-
+### pipeP
+`((a → Promise b), (b → Promise c), …, (y → Promise z)) → (a → Promise z)`
+```js
 //  followersForUser :: String -> Promise [User]
 var followersForUser = R.pipeP(db.getUserById, db.getFollowers);
+```
+
 pluck Added in v0.1.0
 
 Functor f => k → f {k: v} → f v
