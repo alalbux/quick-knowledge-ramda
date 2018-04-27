@@ -1,5 +1,9 @@
 # Quick knowledge Ramda
 
+[__](#__)
+[Add](#add)
+
+
 ## Ramda
 Biblioteca de Javascript funcional.
 
