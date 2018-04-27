@@ -1646,110 +1646,45 @@ getStateCode('[Invalid JSON]');
 var followersForUser = R.pipeP(db.getUserById, db.getFollowers);
 ```
 
-pluck Added in v0.1.0
-
-Functor f => k → f {k: v} → f v
-Parameters
-
-key
-The key name to pluck off of each object.
- f
-The array or functor to consider.
-Returns
-
-Array The list of values for the given key.
-Returns a new list by plucking the same named property off all objects in the list supplied.
-
-pluck will work on any functor in addition to arrays, as it is equivalent to R.map(R.prop(k), f).
-
-See also props.
-
+### pluck
+`Functor f => k → f {k: v} → f v`
+```js
 R.pluck('a')([{a: 1}, {a: 2}]); //=> [1, 2]
 R.pluck(0)([[1, 2], [3, 4]]);   //=> [1, 3]
 R.pluck('val', {a: {val: 3}, b: {val: 5}}); //=> {a: 3, b: 5}
-prepend Added in v0.1.0
+```
 
-a → [a] → [a]
-Parameters
-
-el
-The item to add to the head of the output list.
- list
-The array to add to the tail of the output list.
-Returns
-
-Array A new array.
-Returns a new list with the given element at the front, followed by the contents of the list.
-
-See also append.
-
+### prepend
+`a → [a] → [a]`
+```js
 R.prepend('fee', ['fi', 'fo', 'fum']); //=> ['fee', 'fi', 'fo', 'fum']
-product Added in v0.1.0
+```
 
-[Number] → Number
-Parameters
-
-list
-An array of numbers
-Returns
-
-Number The product of all the numbers in the list.
-Multiplies together all the elements of a list.
-
-See also reduce.
-
+### product
+`[Number] → Number`
+```js
 R.product([2,4,6,8,100,1]); //=> 38400
-project Added in v0.1.0
+```
 
-[k] → [{k: v}] → [{k: v}]
-Parameters
-
-props
-The property names to project
- objs
-The objects to query
-Returns
-
-Array An array of objects with just the `props` properties.
-Reasonable analog to SQL select statement.
-
+### project
+`[k] → [{k: v}] → [{k: v}]`
+```js
 var abby = {name: 'Abby', age: 7, hair: 'blond', grade: 2};
 var fred = {name: 'Fred', age: 12, hair: 'brown', grade: 7};
 var kids = [abby, fred];
 R.project(['name', 'grade'], kids); //=> [{name: 'Abby', grade: 2}, {name: 'Fred', grade: 7}]
-prop Added in v0.1.0
+```
 
-s → {s: a} → a | Undefined
-Parameters
-
-p
-The property name
- obj
-The object to query
-Returns
-
-* The value at `obj.p`.
-Returns a function that when supplied an object returns the indicated property of that object, if it exists.
-
-See also path.
-
+### prop
+`s → {s: a} → a | Undefined`
+```js
 R.prop('x', {x: 100}); //=> 100
 R.prop('x', {}); //=> undefined
-propEq Added in v0.1.0
+```
 
-String → a → Object → Boolean
-Parameters
-
-name
-val
-obj
-Returns
-
-Boolean
-Returns true if the specified object property is equal, in R.equals terms, to the given value; false otherwise. You can test multiple properties with R.where.
-
-See also whereEq, propSatisfies, equals.
-
+### propEq
+`String → a → Object → Boolean`
+```js
 var abby = {name: 'Abby', age: 7, hair: 'blond'};
 var fred = {name: 'Fred', age: 12, hair: 'brown'};
 var rusty = {name: 'Rusty', age: 10, hair: 'brown'};
@@ -1757,40 +1692,19 @@ var alois = {name: 'Alois', age: 15, disposition: 'surly'};
 var kids = [abby, fred, rusty, alois];
 var hasBrownHair = R.propEq('hair', 'brown');
 R.filter(hasBrownHair, kids); //=> [fred, rusty]
-propIs Added in v0.16.0
+```
 
-Type → String → Object → Boolean
-Parameters
-
-type
-name
-obj
-Returns
-
-Boolean
-Returns true if the specified object property is of the given type; false otherwise.
-
-See also is, propSatisfies.
-
+### propIs
+`Type → String → Object → Boolean`
+```js
 R.propIs(Number, 'x', {x: 1, y: 2});  //=> true
 R.propIs(Number, 'x', {x: 'foo'});    //=> false
 R.propIs(Number, 'x', {});            //=> false
-propOr Added in v0.6.0
+```
 
-a → String → Object → a
-Parameters
-
-val
-The default value.
- p
-The name of the property to return.
- obj
-The object to query.
-Returns
-
-* The value of given property of the supplied object or the default value.
-If the given, non-null object has an own property with the specified name, returns the value of that property. Otherwise returns the provided default value.
-
+### propOr
+`a → String → Object → a`
+```js
 var alice = {
   name: 'ALICE',
   age: 101
@@ -1800,83 +1714,34 @@ var favoriteWithDefault = R.propOr('Ramda', 'favoriteLibrary');
 
 favorite(alice);  //=> undefined
 favoriteWithDefault(alice);  //=> 'Ramda'
-props Added in v0.1.0
+```
 
-[k] → {k: v} → [v]
-Parameters
-
-ps
-The property names to fetch
- obj
-The object to query
-Returns
-
-Array The corresponding values or partially applied function.
-Acts as multiple prop: array of keys in, array of values out. Preserves order.
-
+### props
+`[k] → {k: v} → [v]`
+```js
 R.props(['x', 'y'], {x: 1, y: 2}); //=> [1, 2]
 R.props(['c', 'a', 'b'], {b: 2, a: 1}); //=> [undefined, 1, 2]
 
 var fullName = R.compose(R.join(' '), R.props(['first', 'last']));
 fullName({last: 'Bullet-Tooth', age: 33, first: 'Tony'}); //=> 'Tony Bullet-Tooth'
-propSatisfies Added in v0.16.0
+```
 
-(a → Boolean) → String → {String: a} → Boolean
-Parameters
-
-pred
-name
-obj
-Returns
-
-Boolean
-Returns true if the specified object property satisfies the given predicate; false otherwise. You can test multiple properties with R.where.
-
-See also where, propEq, propIs.
-
+### propSatisfies
+`(a → Boolean) → String → {String: a} → Boolean`
+```js
 R.propSatisfies(x => x > 0, 'x', {x: 1, y: 2}); //=> true
-range Added in v0.1.0
+```
 
-Number → Number → [Number]
-Parameters
-
-from
-The first number in the list.
- to
-One more than the last number in the list.
-Returns
-
-Array The list of numbers in tthe set `[a, b)`.
-Returns a list of numbers from from (inclusive) to to (exclusive).
-
+### range
+`Number → Number → [Number]`
+```js
 R.range(1, 5);    //=> [1, 2, 3, 4]
 R.range(50, 53);  //=> [50, 51, 52]
-reduce Added in v0.1.0
+```
 
-((a, b) → a) → a → [b] → a
-Parameters
-
-fn
-The iterator function. Receives two values, the accumulator and the current element from the array.
- acc
-The accumulator value.
- list
-The list to iterate over.
-Returns
-
-* The final, accumulated value.
-Returns a single item by iterating through the list, successively calling the iterator function and passing it an accumulator value and the current value from the array, and then passing the result to the next call.
-
-The iterator function receives two values: (acc, value). It may use R.reduced to shortcut the iteration.
-
-The arguments' order of reduceRight's iterator function is (value, acc).
-
-Note: R.reduce does not skip deleted or unassigned indices (sparse arrays), unlike the native Array.prototype.reduce method. For more details on this behavior, see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce#Description
-
-Dispatches to the reduce method of the third argument, if present. When doing so, it is up to the user to handle the R.reduced shortcuting, as this is not implemented by reduce.
-
-See also reduced, addIndex, reduceRight.
-
+### reduce
+`((a, b) → a) → a → [b] → a`
+```js 
 R.reduce(R.subtract, 0, [1, 2, 3, 4]) // => ((((0 - 1) - 2) - 3) - 4) = -10
 //          -               -10
 //         / \              / \
@@ -1887,30 +1752,11 @@ R.reduce(R.subtract, 0, [1, 2, 3, 4]) // => ((((0 - 1) - 2) - 3) - 4) = -10
 //    -   2           -1   2
 //   / \              / \
 //  0   1            0   1
-reduceBy Added in v0.20.0
+```
 
-((a, b) → a) → a → (b → String) → [b] → {String: a}
-Parameters
-
-valueFn
-The function that reduces the elements of each group to a single value. Receives two values, accumulator for a particular group and the current element.
- acc
-The (initial) accumulator value for each group.
- keyFn
-The function that maps the list's element into a key.
- list
-The array to group.
-Returns
-
-Object An object with the output of `keyFn` for keys, mapped to the output of `valueFn` for elements which produced that key when passed to `keyFn`.
-Groups the elements of the list according to the result of calling the String-returning function keyFn on each element and reduces the elements of each group to a single value via the reducer function valueFn.
-
-This function is basically a more general groupBy function.
-
-Acts as a transducer if a transformer is given in list position.
-
-See also groupBy, reduce.
-
+### reduceBy
+`((a, b) → a) → a → (b → String) → [b] → {String: a}`
+```js
 var reduceToNamesBy = R.reduceBy((acc, student) => acc.concat(student.name), []);
 var namesByGrade = reduceToNamesBy(function(student) {
   var score = student.score;
@@ -1930,50 +1776,20 @@ namesByGrade(students);
 //   // ...,
 //   'F': ['Bart']
 // }
-reduced Added in v0.15.0
+```
 
-a → *
-Parameters
-
-x
-The final value of the reduce.
-Returns
-
-* The wrapped value.
-Returns a value wrapped to indicate that it is the final value of the reduce and transduce functions. The returned value should be considered a black box: the internal structure is not guaranteed to be stable.
-
-Note: this optimization is unavailable to functions not explicitly listed above. For instance, it is not currently supported by reduceRight.
-
-See also reduce, transduce.
-
+### reduced
+`a → *`
+```js
 R.reduce(
  (acc, item) => item > 3 ? R.reduced(acc) : acc.concat(item),
  [],
  [1, 2, 3, 4, 5]) // [1, 2, 3]
-reduceRight Added in v0.1.0
+```
 
-((a, b) → b) → b → [a] → b
-Parameters
-
-fn
-The iterator function. Receives two values, the current element from the array and the accumulator.
- acc
-The accumulator value.
- list
-The list to iterate over.
-Returns
-
-* The final, accumulated value.
-Returns a single item by iterating through the list, successively calling the iterator function and passing it an accumulator value and the current value from the array, and then passing the result to the next call.
-
-Similar to reduce, except moves through the input list from the right to the left.
-
-The iterator function receives two values: (value, acc), while the arguments' order of reduce's iterator function is (acc, value).
-
-Note: R.reduceRight does not skip deleted or unassigned indices (sparse arrays), unlike the native Array.prototype.reduceRight method. For more details on this behavior, see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduceRight#Description
-
-See also reduce, addIndex.
-
+### reduceRight
+`((a, b) → b) → b → [a] → b`
+```js
 R.reduceRight(R.subtract, 0, [1, 2, 3, 4]) // => (1 - (2 - (3 - (4 - 0)))) = -2
 //    -               -2
 //   / \              / \
@@ -1984,124 +1800,59 @@ R.reduceRight(R.subtract, 0, [1, 2, 3, 4]) // => (1 - (2 - (3 - (4 - 0)))) = -2
 //      3   -            3   4
 //         / \              / \
 //        4   0            4   0
-reduceWhile Added in v0.22.0
+```
 
-((a, b) → Boolean) → ((a, b) → a) → a → [b] → a
-Parameters
-
-pred
-The predicate. It is passed the accumulator and the current element.
- fn
-The iterator function. Receives two values, the accumulator and the current element.
- a
-The accumulator value.
- list
-The list to iterate over.
-Returns
-
-* The final, accumulated value.
-Like reduce, reduceWhile returns a single item by iterating through the list, successively calling the iterator function. reduceWhile also takes a predicate that is evaluated before each step. If the predicate returns false, it "short-circuits" the iteration and returns the current value of the accumulator.
-
-See also reduce, reduced.
-
+### reduceWhile
+`((a, b) → Boolean) → ((a, b) → a) → a → [b] → a`
+```js
 var isOdd = (acc, x) => x % 2 === 1;
 var xs = [1, 3, 5, 60, 777, 800];
 R.reduceWhile(isOdd, R.add, 0, xs); //=> 9
 
 var ys = [2, 4, 6]
 R.reduceWhile(isOdd, R.add, 111, ys); //=> 111
-reject Added in v0.1.0
+```
 
-Filterable f => (a → Boolean) → f a → f a
-Parameters
-
-pred
-filterable
-Returns
-
-Array
-The complement of filter.
-
-Acts as a transducer if a transformer is given in list position. Filterable objects include plain objects or any object that has a filter method such as Array.
-
-See also filter, transduce, addIndex.
-
+### reject
+`Filterable f => (a → Boolean) → f a → f a`
+```js
 var isOdd = (n) => n % 2 === 1;
 
 R.reject(isOdd, [1, 2, 3, 4]); //=> [2, 4]
 
 R.reject(isOdd, {a: 1, b: 2, c: 3, d: 4}); //=> {b: 2, d: 4}
-remove Added in v0.2.2
+```
 
-Number → Number → [a] → [a]
-Parameters
-
-start
-The position to start removing elements
- count
-The number of elements to remove
- list
-The list to remove from
-Returns
-
-Array A new Array with `count` elements from `start` removed.
-Removes the sub-list of list starting at index start and containing count elements. Note that this is not destructive: it returns a copy of the list with the changes. No lists have been harmed in the application of this function.
-
+### remove
+`Number → Number → [a] → [a]`
+```js
 R.remove(2, 3, [1,2,3,4,5,6,7,8]); //=> [1,2,6,7,8]
-repeat Added in v0.1.1
+```
 
-a → n → [a]
-Parameters
-
-value
-The value to repeat.
- n
-The desired size of the output list.
-Returns
-
-Array A new array containing `n` `value`s.
-Returns a fixed list of size n containing a specified identical value.
-
-See also times.
-
+### repeat
+`a → n → [a]`
+```
 R.repeat('hi', 5); //=> ['hi', 'hi', 'hi', 'hi', 'hi']
 
 var obj = {};
 var repeatedObjs = R.repeat(obj, 5); //=> [{}, {}, {}, {}, {}]
 repeatedObjs[0] === repeatedObjs[1]; //=> true
-replace Added in v0.7.0
+```
 
-RegExp|String → String → String → String
-Parameters
-
-pattern
-A regular expression or a substring to match.
- replacement
-The string to replace the matches with.
- str
-The String to do the search and replacement in.
-Returns
-
-String The result.
-Replace a substring or regex match in a string with a replacement.
-
+### replace
+`RegExp|String → String → String → String`
+```js
 R.replace('foo', 'bar', 'foo foo foo'); //=> 'bar foo foo'
 R.replace(/foo/, 'bar', 'foo foo foo'); //=> 'bar foo foo'
 
 // Use the "g" (global) flag to replace all occurrences:
 R.replace(/foo/g, 'bar', 'foo foo foo'); //=> 'bar bar bar'
-reverse Added in v0.1.0
+```
 
-[a] → [a]
-String → String
-Parameters
-
-list
-Returns
-
-Array
-Returns a new list or string with the elements or characters in reverse order.
-
+### reverse 
+`[a] → [a]`
+`String → String`
+```js
 R.reverse([1, 2, 3]);  //=> [3, 2, 1]
 R.reverse([1, 2]);     //=> [2, 1]
 R.reverse([1]);        //=> [1]
@@ -2111,67 +1862,34 @@ R.reverse('abc');      //=> 'cba'
 R.reverse('ab');       //=> 'ba'
 R.reverse('a');        //=> 'a'
 R.reverse('');         //=> ''
-scan Added in v0.10.0
+```
 
-((a, b) → a) → a → [b] → [a]
-Parameters
-
-fn
-The iterator function. Receives two values, the accumulator and the current element from the array
- acc
-The accumulator value.
- list
-The list to iterate over.
-Returns
-
-Array A list of all intermediately reduced values.
-Scan is similar to reduce, but returns a list of successively reduced values from the left
-
-See also reduce.
-
+### scan
+`((a, b) → a) → a → [b] → [a]`
+```js
 var numbers = [1, 2, 3, 4];
 var factorials = R.scan(R.multiply, 1, numbers); //=> [1, 1, 2, 6, 24]
-sequence Added in v0.19.0
+```
 
-(Applicative f, Traversable t) => (a → f a) → t (f a) → f (t a)
-Parameters
-
-of
-traversable
-Returns
-
-*
-Transforms a Traversable of Applicative into an Applicative of Traversable.
-
-Dispatches to the sequence method of the second argument, if present.
-
-See also traverse.
-
+### sequence
+`(Applicative f, Traversable t) => (a → f a) → t (f a) → f (t a)`
+```js
 R.sequence(Maybe.of, [Just(1), Just(2), Just(3)]);   //=> Just([1, 2, 3])
 R.sequence(Maybe.of, [Just(1), Just(2), Nothing()]); //=> Nothing()
 
 R.sequence(R.of, Just([1, 2, 3])); //=> [Just(1), Just(2), Just(3)]
 R.sequence(R.of, Nothing());       //=> [Nothing()]
-set Added in v0.16.0
+```
 
-Lens s a → a → s → s
-Lens s a = Functor f => (a → f a) → s → f s
-Parameters
-
-lens
-v
-x
-Returns
-
-*
-Returns the result of "setting" the portion of the given data structure focused by the given lens to the given value.
-
-See also prop, lensIndex, lensProp.
-
+### set
+`Lens s a → a → s → s`
+`Lens s a = Functor f => (a → f a) → s → f s`
+```
 var xLens = R.lensProp('x');
 
 R.set(xLens, 4, {x: 1, y: 2});  //=> {x: 4, y: 2}
 R.set(xLens, 8, {x: 1, y: 2});  //=> {x: 8, y: 2}
+```
 
 ### slice
 `Number → Number → [a] → [a]`
