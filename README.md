@@ -1,7 +1,22 @@
 # Quick knowledge Ramda
 
 * [__](#__)
-* [Add](#add)
+* [add](#add)
+* [addindex](#addindex)
+* [adjust](#adjust)
+* [all](#all)
+* [allPass](#allpass)
+* [always](#always)
+* [and](#and)
+* [any](#any)
+* [anyPass](#anypass)
+* [ap](#ap)
+* [aperture](#aperture)
+* [append](#append)
+* [apply](#apply)
+* [applySpec](#applyspec)
+* [applyTo](#applyto)
+* [ascend](#ascend)
 
 
 ## Ramda
