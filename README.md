@@ -1,7 +1,7 @@
 # Quick knowledge Ramda
 
-[__](#__)
-[Add](#add)
+* [__](#__)
+* [Add](#add)
 
 
 ## Ramda
