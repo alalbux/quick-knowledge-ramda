@@ -53,13 +53,13 @@ Biblioteca de Javascript funcional.
 * [R.__](#__)
 
 ## List
-* R.adjust
-* R.all
-* R.any
-* R.aperture
-* R.append
-* R.chain
-* R.concat
+* [R.adjust](#adjust)
+* [R.all](#all)
+* [R.any](#any)
+* [R.aperture](#aperture)
+* [R.append](#append)
+* [R.chain](#chain)
+* [R.concat](#concat)
 * R.contains
 * R.drop
 * R.dropLast
