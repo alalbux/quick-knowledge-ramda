@@ -222,31 +222,31 @@ Biblioteca de Javascript funcional.
 * R.whereEq
 
 ## Relation
-* R.clamp
-* R.countBy
-* R.difference
-* R.differenceWith
-* R.eqBy
-* R.equals
-* R.gt
-* R.gte
-* R.identical
-* R.innerJoin
-* R.intersection
-* R.lt
-* R.lte
-* R.max
-* R.maxBy
-* R.min
-* R.minBy
-* R.pathEq
-* R.propEq
-* R.sortBy
-* R.sortWith
-* R.symmetricDifference
-* R.symmetricDifferenceWith
-* R.union
-* R.unionWith
+* [R.clamp](#clamp)
+* [R.countBy](#countby)
+* [R.difference](#difference)
+* [R.differenceWith](#differencewith)
+* [R.eqBy](#eqby)
+* [R.equals](#equals)
+* [R.gt](#gt)
+* [R.gte](#gte)
+* [R.identical](#identical)
+* [R.innerJoin](#innerjoin)
+* [R.intersection](#intersection)
+* [R.lt](#lt)
+* [R.lte](#lte)
+* [R.max](#max)
+* [R.maxBy](#maxby)
+* [R.min](#min)
+* [R.minBy](#minby)
+* [R.pathEq](#patheq)
+* [R.propEq](#propeq)
+* [R.sortBy](#sortby)
+* [R.sortWith](#sortwith)
+* [R.symmetricDifference](#symmetricdifference)
+* [R.symmetricDifferenceWith](#symmetricdifferencewith)
+* [R.union](#union)
+* [R.unionWith](#unionwith)
 
 ## String
 * [R.match](#match)
@@ -260,8 +260,8 @@ Biblioteca de Javascript funcional.
 
 ## Type
 * [R.is](#is)
-* R.isNil](#isnil)
-* R.propIs](#propis)
+* [R.isNil](#isnil)
+* [R.propIs](#propis)
 * [R.type](#type)
 
 ### __ 
