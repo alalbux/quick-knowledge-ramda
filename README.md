@@ -249,20 +249,20 @@ Biblioteca de Javascript funcional.
 * R.unionWith
 
 ## String
-* R.match
-* R.replace
-* R.split
-* R.test
-* R.toLower
-* R.toString
-* R.toUpper
-* R.trim
+* [R.match](#match)
+* [R.replace](#replace)
+* [R.split](#split)
+* [R.test](#test)
+* [R.toLower](#tolower)
+* [R.toString](#tostring)
+* [R.toUpper](#toupper)
+* [R.trim](#trim)
 
 ## Type
-* R.is
-* R.isNil
-* R.propIs
-* R.type
+* [R.is](#is)
+* R.isNil](#isnil)
+* R.propIs](#propis)
+* [R.type](#type)
 
 ### __ 
 ```js
